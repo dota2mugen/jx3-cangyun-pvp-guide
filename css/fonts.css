@@ -1,0 +1,7 @@
+/* 本地字体配置 - 使用系统字体作为备选 */
+@import url('https://fonts.bboxapp.com/css?family=Ma%20Shan%20Zheng|Noto%20Serif%20SC:400;600;700');
+
+:root {
+    --font-display: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', '楷体', serif;
+    --font-body: 'Noto Serif SC', 'SimSun', '宋体', serif;
+}
