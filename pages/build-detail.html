@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流派详情 | 苍云PVP攻略</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/slide.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="logo">苍云</div>
+        <button class="mobile-nav-toggle">☰</button>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="builds.html" class="active">流派选择</a></li>
+            <li><a href="tactics.html">PVP 战术</a></li>
+            <li><a href="equipment.html">配装指南</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <button id="backBtn" class="back-btn" style="background:none;border:1px solid var(--color-border);color:var(--color-text);padding:8px 16px;border-radius:4px;cursor:pointer;margin-bottom:16px;">← 返回流派选择</button>
+            <div id="build-detail-container"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="slider-container"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>剑网三无界端 · 苍云 PVP 新手攻略</p>
+            <p class="disclaimer">本攻略仅供参考，实际游戏内容以官方版本为准</p>
+        </div>
+    </footer>
+
+    <script src="../data/build-data.js"></script>
+    <script src="../js/build-slider.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var params = new URLSearchParams(window.location.search);
+        var buildId = params.get('id');
+        
+        var backBtn = document.getElementById('backBtn');
+        backBtn.addEventListener('click', function() {
+            window.location.href = 'builds.html';
+        });
+        
+        if (!buildId || !window.BuildData.builds[buildId]) {
+            document.getElementById('slider-container').innerHTML = 
+                '<div style="text-align:center;padding:60px 20px;">' +
+                '<h2 style="color:var(--color-primary);">未找到流派配置</h2>' +
+                '<p style="color:var(--color-text-muted);margin-top:16px;">请从流派选择页面进入</p>' +
+                '<a href="builds.html" style="display:inline-block;margin-top:24px;padding:12px 24px;background:var(--color-primary);color:var(--color-bg-dark);text-decoration:none;border-radius:4px;">返回选择</a>' +
+                '</div>';
+            return;
+        }
+        
+        var build = window.BuildData.builds[buildId];
+        var html = window.BuildSlider.renderBuildDetail(build);
+        document.getElementById('slider-container').innerHTML = html;
+        
+        window.BuildSlider.init();
+    });
+    </script>
+    <style>
+        .back-btn:hover {
+            background: var(--color-bg-card-alt);
+        }
+        
+        @media (max-width: 768px) {
+            .page-header {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</body>
+</html>

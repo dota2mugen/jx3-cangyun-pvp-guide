@@ -1,0 +1,495 @@
+/* Slide Show Styles */
+.slide-container {
+    position: relative;
+    overflow: hidden;
+    min-height: 60vh;
+}
+
+.slide-wrapper {
+    display: flex;
+    transition: transform 0.4s ease-out;
+    min-height: 60vh;
+}
+
+.slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+.slide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.slide-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.slide-counter {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg-card-alt);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.slide-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.slide-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-bg-card);
+    color: var(--color-text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slide-nav-btn:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: scale(1.1);
+}
+
+.slide-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.slide-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.slide-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slide-dot.active {
+    background: var(--color-primary);
+    transform: scale(1.2);
+}
+
+.slide-dot:hover {
+    background: var(--color-primary-light);
+}
+
+/* Slide Content Styles */
+.slide-content {
+    animation: slideContentFade 0.3s ease-out;
+}
+
+@keyframes slideContentFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skills Card in Slide */
+.slide-skills {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.slide-skill-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--color-bg-card-alt);
+    border-radius: 8px;
+    border-left: 3px solid var(--color-border);
+}
+
+.slide-skill-card.shield {
+    border-left-color: var(--color-shield);
+}
+
+.slide-skill-card.blade {
+    border-left-color: var(--color-blade);
+}
+
+.slide-skill-name {
+    font-weight: 600;
+    color: var(--color-text);
+    min-width: 60px;
+}
+
+.slide-skill-type {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(201, 162, 39, 0.1);
+    color: var(--color-primary);
+}
+
+.slide-skill-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.slide-ultimate {
+    margin-top: 16px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(201, 162, 39, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%);
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+}
+
+.slide-ultimate-title {
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.slide-note {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--color-accent-light);
+    font-style: italic;
+}
+
+/* Talents in Slide */
+.slide-talents {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.slide-talent-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: var(--color-bg-card-alt);
+    border-radius: 8px;
+}
+
+.talent-layer-tag {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    background: var(--color-bg-card);
+    border-radius: 4px;
+    color: var(--color-text-muted);
+}
+
+.talent-pick-name {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-right: 8px;
+}
+
+.talent-reason {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+/* Books in Slide */
+.slide-books {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.slide-book-item {
+    padding: 12px;
+    background: var(--color-bg-card-alt);
+    border-radius: 8px;
+}
+
+.slide-book-skill {
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+
+.slide-book-pick {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px;
+    background: var(--color-bg-card);
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.slide-book-pick::before {
+    content: '✓';
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.slide-book-note {
+    font-size: 0.8rem;
+    color: var(--color-accent-light);
+    margin-top: 4px;
+}
+
+/* Combo in Slide */
+.slide-combo {
+    background: var(--color-bg-card-alt);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.slide-combo-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 16px;
+}
+
+.slide-combo-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.combo-step-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--color-bg-card);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.combo-step-item:hover {
+    transform: translateX(4px);
+}
+
+.combo-step-item.highlight {
+    background: linear-gradient(135deg, rgba(217, 74, 74, 0.2) 0%, rgba(201, 162, 39, 0.1) 100%);
+    border: 1px solid var(--color-blade);
+}
+
+.step-order {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    color: var(--color-bg-dark);
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-skill {
+    font-weight: 600;
+    color: var(--color-text);
+    min-width: 80px;
+}
+
+.step-effect {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.step-key {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    background: var(--color-bg-card-alt);
+    border-radius: 4px;
+    color: var(--color-accent-light);
+    margin-left: auto;
+}
+
+.slide-combo-follow {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--color-border);
+}
+
+.follow-label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+/* Burst in Slide */
+.slide-burst-phases {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.burst-phase {
+    background: var(--color-bg-card-alt);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.burst-phase.prep {
+    border-left: 3px solid var(--color-shield);
+}
+
+.burst-phase.burst {
+    border-left: 3px solid var(--color-blade);
+}
+
+.burst-phase-name {
+    padding: 10px 12px;
+    background: var(--color-bg-card);
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+}
+
+/* Tips in Slide */
+.slide-tips {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tips-section h4 {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tips-section.pros h4 { color: #4caf50; }
+.tips-section.cons h4 { color: #f44336; }
+.tips-section.tips h4 { color: var(--color-primary); }
+
+.tips-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tips-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--color-bg-card-alt);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.tips-list-item::before {
+    content: '•';
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+/* Build Hero Section */
+.build-hero {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(74, 144, 217, 0.1) 0%, rgba(217, 74, 74, 0.05) 100%);
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.build-hero-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+}
+
+.build-hero-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.build-hero-tag {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.build-hero-tag.beginner { background: #4caf50; color: #fff; }
+.build-hero-tag.advanced { background: #ff9800; color: #fff; }
+.build-hero-tag.support { background: #2196f3; color: #fff; }
+
+.build-hero-desc {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Mobile Slide Nav */
+@media (max-width: 768px) {
+    .slide-container {
+        min-height: 70vh;
+    }
+    
+    .slide-wrapper {
+        min-height: 70vh;
+    }
+    
+    .slide-nav-btn {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .slide-title {
+        font-size: 1.2rem;
+    }
+    
+    .slide-skills {
+        gap: 10px;
+    }
+    
+    .slide-skill-card {
+        flex-wrap: wrap;
+    }
+    
+    .slide-skill-desc {
+        width: 100%;
+        margin-top: 4px;
+        padding-left: 72px;
+    }
+    
+    .combo-step-item {
+        flex-wrap: wrap;
+    }
+    
+    .step-key {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 4px;
+        text-align: center;
+    }
+}
