@@ -9,16 +9,16 @@ var BuildData = {
             heroIcon: "🛡️",
             heroColor: "#4a90d9",
             
-            slides: [
+slides: [
                 {
-                    title: "技能配置",
-                    type: "skills",
+                    title: "技能与秘籍",
+                    type: "skills-books",
                     content: {
                         skills: [
-                            { name: "盾猛", type: "shield", desc: "核心控制+减大招CD" },
-                            { name: "盾飞", type: "shield", desc: "切刀增伤+重置刀系CD" },
-                            { name: "闪刀", type: "blade", desc: "位移+战狂爆发" },
-                            { name: "盾墙", type: "shield", desc: "减伤免控+攒血怒" }
+                            { name: "盾猛", type: "shield", desc: "核心控制+减大招CD", book: "刀系技能每消耗一层血怒，降低本招式3秒调息", bookNote: "核心秘籍，战狂减盾猛CD" },
+                            { name: "盾飞", type: "shield", desc: "切刀增伤+重置刀系CD", book: "调息增加5秒，清除刀系招式调息时间", bookNote: "重置闪刀CD，增加爆发频率" },
+                            { name: "闪刀", type: "blade", desc: "位移+战狂爆发", book: "增伤15%，持续12秒", bookNote: "提升爆发伤害" },
+                            { name: "盾墙", type: "shield", desc: "减伤免控+攒血怒", book: "盾墙姿态每被攻击3次，获得1秒盾立", bookNote: "增加免控覆盖" }
                         ],
                         ultimate: { name: "阵云结晦", desc: "封轻功+免控+追击+3血怒" }
                     }
@@ -32,18 +32,6 @@ var BuildData = {
                             { layer: "第二层", pick: "睥睨", reason: "攻击低血量目标增伤10%" },
                             { layer: "第三层", pick: "战狂", reason: "3层血怒触发大伤害+减疗30%" },
                             { layer: "第四层", pick: "阵云结晦", reason: "多段封轻功+追击+3血怒" }
-                        ]
-                    }
-                },
-                {
-                    title: "秘籍配置",
-                    type: "books",
-                    content: {
-                        books: [
-                            { skill: "盾猛", picks: ["刀系技能每消耗一层血怒，降低本招式3秒调息"], note: "核心秘籍，战狂减盾猛CD" },
-                            { skill: "盾飞", picks: ["调息增加5秒，清除刀系招式调息时间"], note: "重置闪刀CD，增加爆发频率" },
-                            { skill: "闪刀", picks: ["增伤15%，持续12秒"], note: "提升爆发伤害" },
-                            { skill: "盾墙", picks: ["盾墙姿态每被攻击3次，获得1秒盾立"], note: "增加免控覆盖" }
                         ]
                     }
                 },
@@ -120,7 +108,7 @@ var BuildData = {
             ]
         },
         
-        "shield-barrier": {
+"shield-barrier": {
             id: "shield-barrier",
             name: "盾壁生存流",
             tag: "新手推荐",
@@ -132,14 +120,14 @@ var BuildData = {
             
             slides: [
                 {
-                    title: "技能配置",
-                    type: "skills",
+                    title: "技能与秘籍",
+                    type: "skills-books",
                     content: {
                         skills: [
-                            { name: "盾猛", type: "shield", desc: "核心控制+减大招CD" },
-                            { name: "盾飞", type: "shield", desc: "切刀增伤+封内控制" },
-                            { name: "闪刀", type: "blade", desc: "位移+战狂爆发（推荐）" },
-                            { name: "盾壁", type: "shield", desc: "解控+护盾+免控" }
+                            { name: "盾猛", type: "shield", desc: "核心控制+减大招CD", book: "刀系技能每消耗一层血怒，降低本招式3秒调息", bookNote: "核心秘籍" },
+                            { name: "盾飞", type: "shield", desc: "切刀增伤+封内控制", book: "内功沉默2秒", bookNote: "无盾墙攒血怒，封内增加控制" },
+                            { name: "闪刀", type: "blade", desc: "位移+战狂爆发（推荐）", book: "增伤15%，持续12秒", bookNote: "提升爆发伤害" },
+                            { name: "盾壁", type: "shield", desc: "解控+护盾+免控", book: "护盾化解伤害额外提高10%，持续时间延长1秒", bookNote: "增强生存" }
                         ],
                         ultimate: { name: "阵云结晦", desc: "封轻功+免控+追击+3血怒" },
                         note: "也可将闪刀换为斩刀，增加控制但减少爆发"
@@ -154,18 +142,6 @@ var BuildData = {
                             { layer: "第二层", pick: "睥睨", reason: "攻击低血量目标增伤10%" },
                             { layer: "第三层", pick: "战狂", reason: "3层血怒触发大伤害+减疗30%" },
                             { layer: "第四层", pick: "阵云结晦", reason: "多段封轻功+追击+3血怒" }
-                        ]
-                    }
-                },
-                {
-                    title: "秘籍配置",
-                    type: "books",
-                    content: {
-                        books: [
-                            { skill: "盾猛", picks: ["刀系技能每消耗一层血怒，降低本招式3秒调息"], note: "核心秘籍" },
-                            { skill: "盾飞", picks: ["内功沉默2秒"], note: "无盾墙攒血怒，封内增加控制" },
-                            { skill: "闪刀", picks: ["增伤15%，持续12秒"], note: "提升爆发伤害" },
-                            { skill: "盾壁", picks: ["护盾化解伤害额外提高10%，持续时间延长1秒"], note: "增强生存" }
                         ]
                     }
                 },
@@ -233,7 +209,7 @@ var BuildData = {
             ]
         },
         
-        "shield-wall-control": {
+"shield-wall-control": {
             id: "shield-wall-control",
             name: "盾墙控制流",
             tag: "进阶",
@@ -244,14 +220,14 @@ var BuildData = {
             
             slides: [
                 {
-                    title: "技能配置",
-                    type: "skills",
+                    title: "技能与秘籍",
+                    type: "skills-books",
                     content: {
                         skills: [
-                            { name: "盾猛", type: "shield", desc: "核心控制+减大招CD" },
-                            { name: "盾飞", type: "shield", desc: "切刀增伤+重置刀系CD" },
-                            { name: "斩刀", type: "blade", desc: "3秒眩晕+击下马" },
-                            { name: "盾墙", type: "shield", desc: "减伤免控+攒血怒" }
+                            { name: "盾猛", type: "shield", desc: "核心控制+减大招CD", book: "刀系技能每消耗一层血怒，降低本招式3秒调息", bookNote: "核心秘籍" },
+                            { name: "盾飞", type: "shield", desc: "切刀增伤+重置刀系CD", book: "调息增加5秒，清除刀系招式调息时间", bookNote: "重置斩刀CD" },
+                            { name: "斩刀", type: "blade", desc: "3秒眩晕+击下马", book: "3秒眩晕，返还下次刀系技能调息", bookNote: "控制核心" },
+                            { name: "盾墙", type: "shield", desc: "减伤免控+攒血怒", book: "盾墙姿态每被攻击3次，获得1秒盾立", bookNote: "增加免控" }
                         ],
                         ultimate: { name: "阵云结晦", desc: "封轻功+免控+追击+3血怒" }
                     }
@@ -265,18 +241,6 @@ var BuildData = {
                             { layer: "第二层", pick: "睥睨", reason: "攻击低血量目标增伤10%" },
                             { layer: "第三层", pick: "战狂", reason: "3层血怒触发爆发+减疗" },
                             { layer: "第四层", pick: "阵云结晦", reason: "多段封轻功+追击" }
-                        ]
-                    }
-                },
-                {
-                    title: "秘籍配置",
-                    type: "books",
-                    content: {
-                        books: [
-                            { skill: "盾猛", picks: ["刀系技能每消耗一层血怒，降低本招式3秒调息"], note: "核心秘籍" },
-                            { skill: "盾飞", picks: ["调息增加5秒，清除刀系招式调息时间"], note: "重置斩刀CD" },
-                            { skill: "斩刀", picks: ["3秒眩晕，返还下次刀系技能调息"], note: "控制核心" },
-                            { skill: "盾墙", picks: ["盾墙姿态每被攻击3次，获得1秒盾立"], note: "增加免控" }
                         ]
                     }
                 },
@@ -334,14 +298,14 @@ var BuildData = {
             
             slides: [
                 {
-                    title: "技能配置",
-                    type: "skills",
+                    title: "技能与秘籍",
+                    type: "skills-books",
                     content: {
                         skills: [
-                            { name: "盾猛", type: "shield", desc: "核心控制" },
-                            { name: "盾墙", type: "shield", desc: "长时间免控减伤" },
-                            { name: "斩刀", type: "blade", desc: "控制衔接" },
-                            { name: "盾壁", type: "shield", desc: "解控+护盾" }
+                            { name: "盾猛", type: "shield", desc: "核心控制", book: "眩晕3秒（非击倒）", bookNote: "控制变体" },
+                            { name: "盾墙", type: "shield", desc: "长时间免控减伤", book: "队友免控+减伤35%", bookNote: "团队辅助" },
+                            { name: "斩刀", type: "blade", desc: "控制衔接", book: "3秒眩晕", bookNote: "控制核心" },
+                            { name: "盾壁", type: "shield", desc: "解控+护盾", book: "队友获得15%血量护盾", bookNote: "团队保护" }
                         ],
                         ultimate: { name: "阵云结晦", desc: "封轻功+免控+追击" },
                         note: "放弃盾飞，生存能力拉满"
@@ -356,18 +320,6 @@ var BuildData = {
                             { layer: "第二层", pick: "睥睨", reason: "增伤" },
                             { layer: "第三层", pick: "战狂", reason: "减疗" },
                             { layer: "第四层", pick: "阵云结晦", reason: "封轻功+免控" }
-                        ]
-                    }
-                },
-                {
-                    title: "秘籍配置",
-                    type: "books",
-                    content: {
-                        books: [
-                            { skill: "盾猛", picks: ["眩晕3秒（非击倒）"], note: "控制变体" },
-                            { skill: "盾墙", picks: ["队友免控+减伤35%"], note: "团队辅助" },
-                            { skill: "斩刀", picks: ["3秒眩晕"], note: "控制核心" },
-                            { skill: "盾壁", picks: ["队友获得15%血量护盾"], note: "团队保护" }
                         ]
                     }
                 },

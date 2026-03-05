@@ -40,6 +40,13 @@ body {
     color: var(--color-text);
     line-height: 1.8;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    padding-top: 90px;
 }
 
 .container {
@@ -716,8 +723,9 @@ section {
 footer {
     background: var(--color-bg-card);
     border-top: 1px solid var(--color-border);
-    padding: 40px 0;
+    padding: 32px 0;
     text-align: center;
+    flex-shrink: 0;
 }
 
 footer p {

@@ -107,7 +107,7 @@
             }, { passive: true });
         }
         
-        function handleSwipe() {
+function handleSwipe() {
             var diff = touchStartX - touchEndX;
             if (Math.abs(diff) > 50) {
                 if (diff > 0) {
@@ -117,6 +117,21 @@
                 }
             }
         }
+        
+        document.addEventListener('keydown', function(e) {
+            if (!slideContainer) return;
+            var rect = slideContainer.getBoundingClientRect();
+            var isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            if (!isVisible) return;
+            
+            if (e.key === 'ArrowLeft' || e.key === 'Left') {
+                e.preventDefault();
+                goToSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowRight' || e.key === 'Right') {
+                e.preventDefault();
+                goToSlide(currentSlide + 1);
+            }
+        });
     }
 
     function renderSlideContent(slide) {
@@ -124,9 +139,12 @@
         var content = slide.content;
         var html = '<div class="slide-content">';
         
-        switch(type) {
+switch(type) {
             case 'skills':
                 html += renderSkillsSlide(content);
+                break;
+            case 'skills-books':
+                html += renderSkillsBooksSlide(content);
                 break;
             case 'talents':
                 html += renderTalentsSlide(content);
@@ -149,7 +167,7 @@
         return html;
     }
 
-    function renderSkillsSlide(content) {
+function renderSkillsSlide(content) {
         var html = '<div class="slide-skills">';
         content.skills.forEach(function(skill) {
             html += '<div class="slide-skill-card ' + skill.type + '">';
@@ -170,6 +188,44 @@
         if (content.note) {
             html += '<p class="slide-note">' + content.note + '</p>';
         }
+        
+        return html;
+    }
+
+    function renderSkillsBooksSlide(content) {
+        var html = '<div class="slide-skills-books">';
+        html += '<div class="skills-list">';
+        content.skills.forEach(function(skill) {
+            html += '<div class="skill-book-row">';
+            html += '<div class="slide-skill-card ' + skill.type + '">';
+            html += '<span class="slide-skill-name">' + skill.name + '</span>';
+            html += '<span class="slide-skill-type">' + (skill.type === 'shield' ? '盾系' : '刀系') + '</span>';
+            html += '<span class="slide-skill-desc">' + skill.desc + '</span>';
+            html += '</div>';
+            if (skill.book) {
+                html += '<div class="skill-book-info">';
+                html += '<div class="skill-book-pick">✓ ' + skill.book + '</div>';
+                if (skill.bookNote) {
+                    html += '<div class="skill-book-note">' + skill.bookNote + '</div>';
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+        });
+        html += '</div>';
+        
+        if (content.ultimate) {
+            html += '<div class="slide-ultimate">';
+            html += '<div class="slide-ultimate-title">绝招</div>';
+            html += '<strong>' + content.ultimate.name + '</strong><br><span style="font-size:0.8rem;color:var(--color-text-muted)">' + content.ultimate.desc + '</span>';
+            html += '</div>';
+        }
+        
+        if (content.note) {
+            html += '<p class="slide-note">' + content.note + '</p>';
+        }
+        
+        html += '</div>';
         
         return html;
     }
@@ -206,7 +262,7 @@
         return html;
     }
 
-    function renderComboSlide(content) {
+function renderComboSlide(content) {
         var html = '<div class="slide-combo">';
         if (content.desc) {
             html += '<p class="slide-combo-desc">' + content.desc + '</p>';
@@ -221,6 +277,9 @@
                 html += '<span class="step-key">' + step.key + '</span>';
             }
             html += '</div>';
+            if (idx < content.steps.length - 1) {
+                html += '<span class="combo-step-arrow">→</span>';
+            }
         });
         html += '</div>';
         
@@ -234,6 +293,9 @@
                 html += '<span class="step-skill">' + step.skill + '</span>';
                 html += '<span class="step-effect">' + step.effect + '</span>';
                 html += '</div>';
+                if (idx < content.followUp.length - 1) {
+                    html += '<span class="combo-step-arrow">→</span>';
+                }
             });
             html += '</div></div>';
         }
@@ -241,22 +303,25 @@
         return html;
     }
 
-    function renderBurstSlide(content) {
+function renderBurstSlide(content) {
         var html = '<div class="slide-burst-phases">';
         if (content.desc) {
-            html += '<p class="slide-combo-desc" style="margin-bottom: 16px;">' + content.desc + '</p>';
+            html += '<p class="slide-combo-desc" style="margin-bottom: 10px;">' + content.desc + '</p>';
         }
         content.phases.forEach(function(phase) {
             var phaseClass = phase.name === '准备' ? 'prep' : 'burst';
             html += '<div class="burst-phase ' + phaseClass + '">';
-            html += '<div class="burst-phase-name">' + phase.name + '阶段</div>';
-            html += '<div class="slide-combo-steps" style="padding: 12px;">';
+            html += '<div class="burst-phase-name">' + phase.name + '</div>';
+            html += '<div class="slide-combo-steps" style="padding: 8px;">';
             phase.steps.forEach(function(step, idx) {
                 html += '<div class="combo-step-item' + (step.highlight ? ' highlight' : '') + '">';
                 html += '<span class="step-order">' + (idx + 1) + '</span>';
                 html += '<span class="step-skill">' + step.skill + '</span>';
                 html += '<span class="step-effect">' + step.effect + '</span>';
                 html += '</div>';
+                if (idx < phase.steps.length - 1) {
+                    html += '<span class="combo-step-arrow">→</span>';
+                }
             });
             html += '</div></div>';
         });
@@ -298,14 +363,29 @@
         return html;
     }
 
-    function renderBuildDetail(build) {
+function renderBuildDetail(build, buildId) {
         var html = '';
         
+        var buildIds = Object.keys(window.BuildData.builds);
+        var currentIndex = buildIds.indexOf(buildId);
+        var prevBuildId = currentIndex > 0 ? buildIds[currentIndex - 1] : null;
+        var nextBuildId = currentIndex < buildIds.length - 1 ? buildIds[currentIndex + 1] : null;
+        
+        html += '<div class="build-header">';
+        html += '<button id="backBtn" class="build-back-btn">← 返回</button>';
         html += '<div class="build-hero">';
-        html += '<div class="build-hero-icon" style="filter: drop-shadow(0 0 20px ' + build.heroColor + ');">' + build.heroIcon + '</div>';
+        html += '<div class="build-hero-icon">' + build.heroIcon + '</div>';
         html += '<h1 class="build-hero-title">' + build.name + '</h1>';
         html += '<span class="build-hero-tag ' + build.tagClass + '">' + build.tag + '</span>';
-        html += '<p class="build-hero-desc">' + build.description + '</p>';
+        html += '</div>';
+        html += '<div class="build-switch">';
+        if (prevBuildId) {
+            html += '<button class="build-switch-btn build-prev-btn" data-id="' + prevBuildId + '">◀</button>';
+        }
+        if (nextBuildId) {
+            html += '<button class="build-switch-btn build-next-btn" data-id="' + nextBuildId + '">▶</button>';
+        }
+        html += '</div>';
         html += '</div>';
         
         html += '<div class="slide-container">';
@@ -323,11 +403,9 @@
         
         html += '</div>';
         
-        html += '<div class="slide-nav">';
         html += '<button class="slide-nav-btn slide-prev" aria-label="上一页">◀</button>';
-        html += '<div class="slide-dots"></div>';
         html += '<button class="slide-nav-btn slide-next" aria-label="下一页">▶</button>';
-        html += '</div>';
+        html += '<div class="slide-dots"></div>';
         
         html += '</div>';
         
@@ -341,3 +419,12 @@
         renderBuildDetail: renderBuildDetail
     };
 })();
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('build-prev-btn') || e.target.classList.contains('build-next-btn')) {
+        var buildId = e.target.dataset.id;
+        if (buildId) {
+            window.location.href = 'build-detail.html?id=' + buildId;
+        }
+    }
+});

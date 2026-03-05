@@ -20,13 +20,6 @@
         </ul>
     </nav>
 
-    <header class="page-header">
-        <div class="container">
-            <button id="backBtn" class="back-btn" style="background:none;border:1px solid var(--color-border);color:var(--color-text);padding:8px 16px;border-radius:4px;cursor:pointer;margin-bottom:16px;">← 返回流派选择</button>
-            <div id="build-detail-container"></div>
-        </div>
-    </header>
-
     <main>
         <div class="container">
             <div id="slider-container"></div>
@@ -48,11 +41,6 @@
         var params = new URLSearchParams(window.location.search);
         var buildId = params.get('id');
         
-        var backBtn = document.getElementById('backBtn');
-        backBtn.addEventListener('click', function() {
-            window.location.href = 'builds.html';
-        });
-        
         if (!buildId || !window.BuildData.builds[buildId]) {
             document.getElementById('slider-container').innerHTML = 
                 '<div style="text-align:center;padding:60px 20px;">' +
@@ -64,19 +52,19 @@
         }
         
         var build = window.BuildData.builds[buildId];
-        var html = window.BuildSlider.renderBuildDetail(build);
+        var html = window.BuildSlider.renderBuildDetail(build, buildId);
         document.getElementById('slider-container').innerHTML = html;
         
         window.BuildSlider.init();
+        
+        document.getElementById('backBtn').addEventListener('click', function() {
+            window.location.href = 'builds.html';
+        });
     });
     </script>
     <style>
-        .back-btn:hover {
-            background: var(--color-bg-card-alt);
-        }
-        
         @media (max-width: 768px) {
-            .page-header {
+            main {
                 padding-top: 80px;
             }
         }
