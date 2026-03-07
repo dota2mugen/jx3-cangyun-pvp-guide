@@ -1,8 +1,8 @@
 var BuildData = {
     builds: {
-        "shield-wall-burst": {
+"shield-wall-burst": {
             id: "shield-wall-burst",
-            name: "盾墙爆发流",
+            name: "闪刀爆发流",
             tag: "进阶",
             tagClass: "advanced",
             description: "盾墙内攒3层血怒，绝招期间连续3次战狂爆发，追求极限伤害",
@@ -211,7 +211,7 @@ slides: [
         
 "shield-wall-control": {
             id: "shield-wall-control",
-            name: "盾墙控制流",
+            name: "斩刀控制流",
             tag: "进阶",
             tagClass: "advanced",
             description: "保留双战狂爆发的同时增加斩刀控制，适合配合高输出队友",
@@ -244,7 +244,7 @@ slides: [
                         ]
                     }
                 },
-                {
+{
                     title: "控制链循环",
                     type: "combo",
                     content: {
@@ -259,6 +259,36 @@ slides: [
                             { skill: "斩刀", effect: "切奶/防递减" },
                             { skill: "盾飞2段", effect: "收盾（无公CD）" },
                             { skill: "盾墙", effect: "减伤+免控+等CD" }
+                        ]
+                    }
+                },
+                {
+                    title: "绝招控制链",
+                    type: "burst",
+                    content: {
+                        desc: "盾墙内攒3层血怒，绝招期间打出长控制链",
+                        phases: [
+                            {
+                                name: "准备",
+                                steps: [
+                                    { skill: "盾墙", effect: "进盾墙" },
+                                    { skill: "盾舞(普攻)", effect: "+1层血怒" },
+                                    { skill: "盾猛(盾墙内)", effect: "击倒+攒3层血怒" }
+                                ]
+                            },
+                            {
+                                name: "爆发",
+                                steps: [
+                                    { skill: "阵云1段", effect: "封轻功" },
+                                    { skill: "斩刀", effect: "眩晕+战狂", highlight: true },
+                                    { skill: "阵云2段", effect: "封轻功" },
+                                    { skill: "盾猛1段", effect: "击倒" },
+                                    { skill: "盾猛2段", effect: "封轻功" },
+                                    { skill: "盾飞", effect: "重置斩刀" },
+                                    { skill: "阵云3段", effect: "封轻功+3血怒" },
+                                    { skill: "斩刀", effect: "递减眩晕+战狂", highlight: true }
+                                ]
+                            }
                         ]
                     }
                 },

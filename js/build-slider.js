@@ -36,6 +36,10 @@
         bindEvents();
         
         if (counterEl) counterEl.textContent = '1 / ' + totalSlides;
+        
+        setTimeout(function() {
+            triggerComboAnimation();
+        }, 100);
     }
 
     function createDots() {
@@ -62,6 +66,24 @@
                 dot.classList.toggle('active', idx === currentSlide);
             });
         }
+        
+        triggerComboAnimation();
+    }
+    
+    function triggerComboAnimation() {
+        var allCombos = document.querySelectorAll('.slide-combo');
+        allCombos.forEach(function(combo) {
+            combo.classList.remove('animate-play');
+        });
+        
+        var currentSlideEl = slideWrapper.querySelectorAll('.slide')[currentSlide];
+        if (!currentSlideEl) return;
+        
+        var combos = currentSlideEl.querySelectorAll('.slide-combo');
+        combos.forEach(function(combo) {
+            void combo.offsetWidth;
+            combo.classList.add('animate-play');
+        });
     }
 
     function goToSlide(index) {
@@ -107,7 +129,7 @@
             }, { passive: true });
         }
         
-function handleSwipe() {
+        function handleSwipe() {
             var diff = touchStartX - touchEndX;
             if (Math.abs(diff) > 50) {
                 if (diff > 0) {
@@ -139,7 +161,7 @@ function handleSwipe() {
         var content = slide.content;
         var html = '<div class="slide-content">';
         
-switch(type) {
+        switch(type) {
             case 'skills':
                 html += renderSkillsSlide(content);
                 break;
@@ -167,7 +189,7 @@ switch(type) {
         return html;
     }
 
-function renderSkillsSlide(content) {
+    function renderSkillsSlide(content) {
         var html = '<div class="slide-skills">';
         content.skills.forEach(function(skill) {
             html += '<div class="slide-skill-card ' + skill.type + '">';
@@ -262,14 +284,15 @@ function renderSkillsSlide(content) {
         return html;
     }
 
-function renderComboSlide(content) {
+    function renderComboSlide(content) {
         var html = '<div class="slide-combo">';
         if (content.desc) {
             html += '<p class="slide-combo-desc">' + content.desc + '</p>';
         }
         html += '<div class="slide-combo-steps">';
         content.steps.forEach(function(step, idx) {
-            html += '<div class="combo-step-item' + (step.highlight ? ' highlight' : '') + '">';
+            var delay = idx * 0.3;
+            html += '<div class="combo-step-item' + (step.highlight ? ' highlight' : '') + '" style="--delay: ' + delay + 's;">';
             html += '<span class="step-order">' + (idx + 1) + '</span>';
             html += '<span class="step-skill">' + step.skill + '</span>';
             html += '<span class="step-effect">' + step.effect + '</span>';
@@ -278,7 +301,10 @@ function renderComboSlide(content) {
             }
             html += '</div>';
             if (idx < content.steps.length - 1) {
-                html += '<span class="combo-step-arrow">→</span>';
+                var currentType = step.type || detectSkillType(step.skill);
+                var nextType = content.steps[idx + 1].type || detectSkillType(content.steps[idx + 1].skill);
+                var particleClass = getParticleClass(currentType, nextType);
+                html += '<span class="combo-step-arrow ' + particleClass + '" style="--particle-delay: ' + (delay + 0.2) + 's;">→</span>';
             }
         });
         html += '</div>';
@@ -288,13 +314,17 @@ function renderComboSlide(content) {
             html += '<div class="follow-label">后续动作</div>';
             html += '<div class="slide-combo-steps">';
             content.followUp.forEach(function(step, idx) {
-                html += '<div class="combo-step-item">';
+                var delay = (content.steps.length + idx) * 0.3;
+                html += '<div class="combo-step-item" style="--delay: ' + delay + 's;">';
                 html += '<span class="step-order">' + (idx + 1) + '</span>';
                 html += '<span class="step-skill">' + step.skill + '</span>';
                 html += '<span class="step-effect">' + step.effect + '</span>';
                 html += '</div>';
                 if (idx < content.followUp.length - 1) {
-                    html += '<span class="combo-step-arrow">→</span>';
+                    var currentType = detectSkillType(step.skill);
+                    var nextType = detectSkillType(content.followUp[idx + 1].skill);
+                    var particleClass = getParticleClass(currentType, nextType);
+                    html += '<span class="combo-step-arrow ' + particleClass + '" style="--particle-delay: ' + (delay + 0.2) + 's;">→</span>';
                 }
             });
             html += '</div></div>';
@@ -302,9 +332,27 @@ function renderComboSlide(content) {
         html += '</div>';
         return html;
     }
+    
+    function detectSkillType(skillName) {
+        var shieldSkills = ['盾猛', '盾飞', '盾墙', '盾壁', '盾压', '盾舞'];
+        var bladeSkills = ['闪刀', '斩刀', '隐刀', '刀系'];
+        for (var i = 0; i < shieldSkills.length; i++) {
+            if (skillName.indexOf(shieldSkills[i]) !== -1) return 'shield';
+        }
+        for (var j = 0; j < bladeSkills.length; j++) {
+            if (skillName.indexOf(bladeSkills[j]) !== -1) return 'blade';
+        }
+        return 'shield';
+    }
+    
+    function getParticleClass(currentType, nextType) {
+        if (currentType === 'shield' && nextType === 'blade') return 'particle-mix';
+        if (currentType === 'blade') return 'particle-blade';
+        return 'particle-shield';
+    }
 
-function renderBurstSlide(content) {
-        var html = '<div class="slide-burst-phases">';
+    function renderBurstSlide(content) {
+        var html = '<div class="slide-combo slide-burst">';
         if (content.desc) {
             html += '<p class="slide-combo-desc" style="margin-bottom: 10px;">' + content.desc + '</p>';
         }
@@ -314,13 +362,17 @@ function renderBurstSlide(content) {
             html += '<div class="burst-phase-name">' + phase.name + '</div>';
             html += '<div class="slide-combo-steps" style="padding: 8px;">';
             phase.steps.forEach(function(step, idx) {
-                html += '<div class="combo-step-item' + (step.highlight ? ' highlight' : '') + '">';
+                var delay = idx * 0.3;
+                html += '<div class="combo-step-item' + (step.highlight ? ' highlight' : '') + '" style="--delay: ' + delay + 's;">';
                 html += '<span class="step-order">' + (idx + 1) + '</span>';
                 html += '<span class="step-skill">' + step.skill + '</span>';
                 html += '<span class="step-effect">' + step.effect + '</span>';
                 html += '</div>';
                 if (idx < phase.steps.length - 1) {
-                    html += '<span class="combo-step-arrow">→</span>';
+                    var currentType = step.type || detectSkillType(step.skill);
+                    var nextType = phase.steps[idx + 1].type || detectSkillType(phase.steps[idx + 1].skill);
+                    var particleClass = getParticleClass(currentType, nextType);
+                    html += '<span class="combo-step-arrow ' + particleClass + '" style="--particle-delay: ' + (delay + 0.2) + 's;">→</span>';
                 }
             });
             html += '</div></div>';
@@ -363,7 +415,7 @@ function renderBurstSlide(content) {
         return html;
     }
 
-function renderBuildDetail(build, buildId) {
+    function renderBuildDetail(build, buildId) {
         var html = '';
         
         var buildIds = Object.keys(window.BuildData.builds);

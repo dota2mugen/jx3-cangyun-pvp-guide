@@ -8,18 +8,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="nav-placeholder"></div>
     <header class="hero">
         <div class="hero-overlay"></div>
-        <nav class="main-nav">
-            <div class="logo">苍云</div>
-<ul class="nav-links">
-                <li><a href="index.html" class="active">首页</a></li>
-                <li><a href="pages/skills.html">技能详解</a></li>
-                <li><a href="pages/builds.html">流派选择</a></li>
-                <li><a href="pages/tactics.html">PVP 战术</a></li>
-                <li><a href="pages/equipment.html">配装指南</a></li>
-            </ul>
-        </nav>
         <div class="hero-content">
             <h1 class="hero-title">
                 <span class="title-main">苍云</span>
@@ -92,43 +83,6 @@
             </div>
         </section>
 
-        <section class="stats-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>属性优先级</h2>
-                    <div class="divider"></div>
-                </div>
-                
-                <div class="stats-priority">
-                    <div class="stat-item top">
-                        <span class="stat-rank">1</span>
-                        <span class="stat-name">攻击力</span>
-                        <span class="stat-desc">提升所有技能伤害</span>
-                    </div>
-                    <div class="stat-item high">
-                        <span class="stat-rank">2</span>
-                        <span class="stat-name">会心</span>
-                        <span class="stat-desc">提高暴击率</span>
-                    </div>
-                    <div class="stat-item high">
-                        <span class="stat-rank">3</span>
-                        <span class="stat-name">会效</span>
-                        <span class="stat-desc">提高暴击伤害</span>
-                    </div>
-                    <div class="stat-item mid">
-                        <span class="stat-rank">4</span>
-                        <span class="stat-name">破防</span>
-                        <span class="stat-desc">穿透敌方防御</span>
-                    </div>
-                    <div class="stat-item low">
-                        <span class="stat-rank">5</span>
-                        <span class="stat-name">御劲</span>
-                        <span class="stat-desc">减少被暴击几率</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="quick-nav">
             <div class="container">
                 <div class="section-header">
@@ -142,28 +96,29 @@
                         <h3>技能详解</h3>
                         <p>核心技能机制解析、奇穴选择、秘籍推荐</p>
                     </a>
+                    <a href="pages/builds.html" class="nav-card">
+                        <div class="nav-card-icon">🛡</div>
+                        <h3>流派选择</h3>
+                        <p>四种流派详解、技能配置、打法思路</p>
+                    </a>
                     <a href="pages/tactics.html" class="nav-card">
                         <div class="nav-card-icon">🎯</div>
                         <h3>PVP战术</h3>
-                        <p>竞技场定位、战场技巧、对战各门派策略</p>
+                        <p>33竞技场攻防教学、配置思路详解</p>
                     </a>
                     <a href="pages/equipment.html" class="nav-card">
                         <div class="nav-card-icon">👗</div>
                         <h3>配装指南</h3>
-                        <p>装备选择、属性搭配、五彩石镶嵌</p>
+                        <p>配装思路、属性取舍、五彩石选择</p>
                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>剑网三无界端 · 苍云PVP新手攻略</p>
-            <p class="disclaimer">本攻略仅供参考，实际游戏内容以官方版本为准</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="js/components.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

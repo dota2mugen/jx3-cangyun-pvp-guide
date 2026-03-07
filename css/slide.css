@@ -367,6 +367,8 @@
     background: var(--color-bg-card-alt);
     border-radius: 6px;
     padding: 12px;
+    position: relative;
+    overflow: hidden;
 }
 
 .slide-combo-desc {
@@ -390,6 +392,62 @@
     background: var(--color-bg-card);
     border-radius: 5px;
     margin: 3px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: none;
+}
+
+.slide-combo.animate-play .combo-step-item {
+    animation: comboStepIn 0.5s ease-out forwards, comboStepHighlight 1.2s ease-out forwards;
+    animation-delay: var(--delay, 0s), var(--delay, 0s);
+}
+
+@keyframes comboStepIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes comboStepHighlight {
+    0% {
+        background: var(--color-bg-card);
+        box-shadow: 0 0 0 rgba(201, 162, 39, 0), 0 0 0 rgba(201, 162, 39, 0) inset;
+        border-color: transparent;
+    }
+    15% {
+        background: linear-gradient(135deg, rgba(201, 162, 39, 0.2) 0%, rgba(139, 69, 19, 0.1) 100%);
+        box-shadow: 0 0 20px rgba(201, 162, 39, 0.5), 0 0 30px rgba(201, 162, 39, 0.3), 0 0 0 rgba(201, 162, 39, 0.2) inset;
+        border-color: rgba(201, 162, 39, 0.6);
+    }
+    40% {
+        background: linear-gradient(135deg, rgba(201, 162, 39, 0.25) 0%, rgba(74, 144, 217, 0.15) 100%);
+        box-shadow: 0 0 25px rgba(201, 162, 39, 0.6), 0 0 40px rgba(201, 162, 39, 0.3), 0 0 15px rgba(201, 162, 39, 0.3) inset;
+        border-color: var(--color-primary);
+    }
+    100% {
+        background: var(--color-bg-card);
+        box-shadow: 0 0 0 rgba(201, 162, 39, 0), 0 0 0 rgba(201, 162, 39, 0) inset;
+        border-color: transparent;
+    }
+}
+
+.combo-step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: var(--color-bg-card);
+    border-radius: 5px;
+    margin: 3px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: none;
+    border: 1px solid transparent;
 }
 
 .combo-step-item.highlight {
@@ -398,10 +456,97 @@
     box-shadow: 0 0 10px rgba(217, 74, 74, 0.3);
 }
 
+.slide-combo.animate-play .combo-step-item.highlight {
+    animation: comboStepIn 0.4s ease-out forwards, comboPulse 1.5s ease-in-out infinite;
+    animation-delay: var(--delay, 0s), calc(var(--delay, 0s) + 0.5s);
+}
+
+@keyframes comboPulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(217, 74, 74, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(217, 74, 74, 0.6), 0 0 30px rgba(201, 162, 39, 0.4);
+    }
+}
+
 .combo-step-arrow {
     color: var(--color-primary);
     font-size: 1rem;
     margin: 0 2px;
+    opacity: 0;
+    position: relative;
+}
+
+.slide-combo.animate-play .combo-step-arrow {
+    animation: arrowFadeIn 0.3s ease-out forwards;
+    animation-delay: var(--particle-delay, 0.1s);
+}
+
+@keyframes arrowFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.combo-step-arrow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.slide-combo.animate-play .combo-step-arrow::before {
+    background: linear-gradient(90deg, var(--particle-start, #4a90d9), var(--particle-end, #4a90d9));
+    animation: particleFlow 1.5s ease-in-out infinite;
+    animation-delay: var(--particle-delay, 0.2s);
+    box-shadow: 0 0 4px var(--particle-start, #4a90d9);
+}
+
+@keyframes particleFlow {
+    0% {
+        background: linear-gradient(90deg, 
+            var(--particle-start, #4a90d9) 0%, 
+            transparent 0%,
+            transparent 100%);
+    }
+    50% {
+        background: linear-gradient(90deg, 
+            transparent 0%,
+            var(--particle-start, #4a90d9) 40%,
+            var(--particle-end, #4a90d9) 60%,
+            transparent 100%);
+        box-shadow: 0 0 8px var(--particle-start, #4a90d9);
+    }
+    100% {
+        background: linear-gradient(90deg, 
+            transparent 0%,
+            transparent 100%,
+            var(--particle-end, #4a90d9) 100%);
+    }
+}
+
+.combo-step-arrow.particle-shield::before {
+    --particle-start: #4a90d9;
+    --particle-end: #4a90d9;
+}
+
+.combo-step-arrow.particle-blade::before {
+    --particle-start: #d94a4a;
+    --particle-end: #d94a4a;
+}
+
+.combo-step-arrow.particle-mix::before {
+    --particle-start: #4a90d9;
+    --particle-end: #d94a4a;
 }
 
 .step-order {
@@ -450,6 +595,12 @@
 }
 
 /* Burst in Slide */
+.slide-burst {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .slide-burst-phases {
     display: flex;
     flex-direction: column;
