@@ -75,39 +75,49 @@
     
     // 初始化
     function init() {
-        // 查找并替换导航栏占位符
         var navPlaceholder = document.getElementById('nav-placeholder');
         if (navPlaceholder) {
             navPlaceholder.outerHTML = renderNav();
         }
         
-        // 查找并替换页脚占位符
         var footerPlaceholder = document.getElementById('footer-placeholder');
         if (footerPlaceholder) {
             footerPlaceholder.outerHTML = renderFooter();
         }
+    }
+    
+    function initMobileNavOnce() {
+        var toggle = document.querySelector('.mobile-nav-toggle');
+        var navLinks = document.querySelector('.nav-links');
         
-        // 重新初始化移动端导航（因为DOM已更新）
-        if (typeof initMobileNav === 'function') {
-            initMobileNav();
-        } else {
-            // 如果main.js还未加载，手动绑定
-            var toggle = document.querySelector('.mobile-nav-toggle');
-            var navLinks = document.querySelector('.nav-links');
-            if (toggle && navLinks) {
-                toggle.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                    this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
-                });
-            }
+        if (!toggle || !navLinks) return;
+        
+        if (toggle.getAttribute('data-nav-initialized') === 'true') return;
+        
+        toggle.setAttribute('data-nav-initialized', 'true');
+        
+        toggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        var links = navLinks.querySelectorAll('a');
+        for (var i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                toggle.textContent = '☰';
+            });
         }
     }
     
-    // DOM加载完成后执行
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            initMobileNavOnce();
+        });
     } else {
         init();
+        initMobileNavOnce();
     }
     
     // 暴露到全局
