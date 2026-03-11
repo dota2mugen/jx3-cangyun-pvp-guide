@@ -1,0 +1,72 @@
+{
+  "statsPriority": [
+    { "rank": 1, "name": "攻击力", "desc": "提升所有技能伤害", "priority": "最高优先级", "icon": "⚔" },
+    { "rank": 2, "name": "会心", "desc": "提高暴击率", "priority": "高优先级", "icon": "💥" },
+    { "rank": 3, "name": "会效", "desc": "提高暴击伤害", "priority": "高优先级", "icon": "🔥" },
+    { "rank": 4, "name": "破防", "desc": "穿透敌方防御", "priority": "中等优先级", "icon": "🛡" },
+    { "rank": 5, "name": "御劲", "desc": "减少被暴击几率", "priority": "生存属性", "icon": "🛡" },
+    { "rank": 6, "name": "体质", "desc": "增加生命值上限", "priority": "生存属性", "icon": "💪" }
+  ],
+  "statsRatio": [
+    { "stat": "攻击力", "beginner": "优先堆叠", "advanced": "持续提升", "endgame": "最大化" },
+    { "stat": "会心", "beginner": "30%左右", "advanced": "35%-40%", "endgame": "40%-45%" },
+    { "stat": "会效", "beginner": "150%+", "advanced": "180%+", "endgame": "200%+" },
+    { "stat": "破防", "beginner": "适度", "advanced": "200+", "endgame": "300+" },
+    { "stat": "御劲", "beginner": "100+", "advanced": "150+", "endgame": "200+" }
+  ],
+  "setEffects": [
+    {
+      "name": "玄甲套装",
+      "effects": [
+        { "pieces": 2, "effect": "攻击力+5%" },
+        { "pieces": 4, "effect": "盾墙减伤效果+5%" },
+        { "pieces": 6, "effect": "权门伤害+10%，怒气获取+10%" }
+      ],
+      "recommended": true,
+      "desc": "偏向输出，适合进攻型打法"
+    },
+    {
+      "name": "苍云战甲",
+      "effects": [
+        { "pieces": 2, "effect": "生命值+10%" },
+        { "pieces": 4, "effect": "御劲+50" },
+        { "pieces": 6, "effect": "受击时10%几率获得护盾" }
+      ],
+      "recommended": false,
+      "desc": "偏向生存，适合防守型打法"
+    }
+  ],
+  "buildSets": [
+    {
+      "name": "爆发输出型",
+      "items": [
+        { "slot": "武器", "name": "玄铁重剑·极", "stats": "攻击力% + 会心%", "gems": "红石攻击 + 黄石会心" },
+        { "slot": "头盔", "name": "玄甲战盔", "stats": "会心% + 会效%", "gems": "黄石会心 + 黄石会效" },
+        { "slot": "护甲", "name": "玄甲战铠", "stats": "攻击力% + 体质", "gems": "蓝石体质 + 红石攻击" },
+        { "slot": "护手", "name": "玄甲护手", "stats": "破防 + 会心%", "gems": "红石破防 + 黄石会心" },
+        { "slot": "腰带", "name": "玄甲腰带", "stats": "御劲 + 生命%", "gems": "蓝石御劲 + 蓝石体质" },
+        { "slot": "护腿", "name": "玄甲战裤", "stats": "会效% + 攻击力%", "gems": "黄石会效 + 红石攻击" },
+        { "slot": "战靴", "name": "玄甲战靴", "stats": "身法 + 御劲", "gems": "紫石身法 + 蓝石御劲" }
+      ]
+    },
+    {
+      "name": "生存坦克型",
+      "items": [
+        { "slot": "武器", "name": "苍云重剑", "stats": "攻击力% + 御劲", "gems": "红石攻击 + 蓝石御劲" },
+        { "slot": "头盔", "name": "苍云战盔", "stats": "生命% + 御劲", "gems": "蓝石体质 + 蓝石御劲" },
+        { "slot": "护甲", "name": "苍云战铠", "stats": "生命% + 体质", "gems": "蓝石体质 + 蓝石体质" },
+        { "slot": "护手", "name": "苍云护手", "stats": "御劲 + 生命%", "gems": "蓝石御劲 + 蓝石体质" },
+        { "slot": "腰带", "name": "苍云腰带", "stats": "御劲 + 体质", "gems": "蓝石御劲 + 蓝石体质" },
+        { "slot": "护腿", "name": "苍云战裤", "stats": "生命% + 御劲", "gems": "蓝石体质 + 蓝石御劲" },
+        { "slot": "战靴", "name": "苍云战靴", "stats": "身法 + 御劲", "gems": "紫石身法 + 蓝石御劲" }
+      ]
+    }
+  ],
+  "dailyTasks": [
+    "完成日常任务获取基础资源",
+    "参与竞技场获取竞技积分",
+    "挑战可通关的副本获取装备",
+    "查看交易行是否有性价比高的装备",
+    "参与限时活动获取额外奖励"
+  ]
+}
