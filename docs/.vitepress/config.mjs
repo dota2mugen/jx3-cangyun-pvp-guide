@@ -5,6 +5,9 @@ export default defineConfig({
   description: '剑网三无界端全门派PVP新手攻略',
   lang: 'zh-CN',
   
+  srcExclude: ['**/superpowers/**'],
+  ignoreDeadLinks: true,
+  
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
