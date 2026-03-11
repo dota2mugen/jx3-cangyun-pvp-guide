@@ -117,6 +117,30 @@
 | `tactics.json` | 33战术、配置应对 | ~150行 |
 | `equipment.json` | 配装推荐、属性优先级 | ~100行 |
 
+### 4.1.1 数据加载机制
+
+Markdown页面通过**ES模块import**加载JSON数据：
+
+```vue
+<!-- 在Markdown中使用组件 -->
+<script setup>
+import skillsData from '../../data/cangyun/skills.json'
+</script>
+
+<SkillList :data="skillsData" />
+```
+
+或在组件内部通过**动态import**按需加载：
+
+```javascript
+// 组件内动态加载
+const loadData = async (sect, file) => {
+  return await import(`../../data/${sect}/${file}.json`)
+}
+```
+
+**设计决策**：优先使用静态import，确保构建时数据内联；动态import用于需要运行时决定的场景（如流派详情页根据URL参数加载）。
+
 ### 4.2 数据模型定义
 
 #### index.json（门派基础信息）
@@ -245,8 +269,16 @@ export default {
 }
 
 function getSectId(path) {
+  // 首页 "/" 或非门派路径返回空字符串，使用默认主题
+  if (path === '/' || !path) return ''
+  
   const match = path.match(/^\/(\w+)/)
-  return match && match[1] !== 'mechanics' ? match[1] : ''
+  const firstSegment = match ? match[1] : ''
+  
+  // mechanics 是通用页面，不是门派
+  if (firstSegment === 'mechanics') return ''
+  
+  return firstSegment
 }
 ```
 
@@ -256,14 +288,14 @@ function getSectId(path) {
 
 ### 6.1 通用组件
 
-| 组件 | 功能 | 使用页面 |
-|------|------|----------|
-| `SkillCard.vue` | 技能卡片，展示技能信息、CD、秘籍 | skills.md |
-| `BuildSlider.vue` | 流派详情幻灯片，PPT切换效果 | build-detail.md |
-| `MechanismTable.vue` | 机制表格，展示核心机制 | skills.md, mechanics.md |
-| `ProsConsCard.vue` | 优劣势卡片 | 门派首页 |
-| `TalentSelect.vue` | 奇穴选择展示 | skills.md |
-| `ComboDisplay.vue` | 连招展示 | build-detail.md |
+| 组件 | 功能 | 使用页面 | 状态 |
+|------|------|----------|------|
+| `SkillCard.vue` | 技能卡片，展示技能信息、CD、秘籍 | skills.md | 首期实现 |
+| `BuildSlider.vue` | 流派详情幻灯片，PPT切换效果 | build-detail.md | 首期实现 |
+| `MechanismTable.vue` | 机制表格，展示核心机制 | skills.md, mechanics.md | 首期实现 |
+| `ProsConsCard.vue` | 优劣势卡片 | 门派首页 | 首期实现 |
+| `TalentSelect.vue` | 奇穴选择展示 | skills.md | 后续实现 |
+| `ComboDisplay.vue` | 连招展示 | build-detail.md | 后续实现 |
 
 ### 6.2 门派专属组件
 
@@ -273,11 +305,11 @@ function getSectId(path) {
 components/sect/
 ├── cangyun/
 │   └── ShieldBladeToggle.vue    # 盾刀状态切换示意
-├── tiance/
-│   └── MountChargeMeter.vue     # 马上/下马状态条
-└── qixiu/
-    └── DanceStackDisplay.vue    # 剑舞层数展示
+└── tiance/
+    └── MountChargeMeter.vue     # 马上/下马状态条
 ```
+
+**说明**：门派专属组件为可选扩展，首期迁移可暂不实现，待门派页面稳定后再按需添加。
 
 ### 6.3 组件示例
 
@@ -324,6 +356,13 @@ defineProps({
 | 苍云流派选择 | `/cangyun/builds` |
 | 苍云流派详情 | `/cangyun/build-detail?id=xxx` |
 | 天策首页 | `/tiance/` |
+
+**流派详情页URL方案说明**：
+
+使用查询参数 `?id=xxx` 而非动态路由 `[id].md`，原因：
+1. 流派数量有限（每门派约4个），无需动态路由
+2. 单页面+查询参数实现更简单，便于维护
+3. 原项目使用相同方案，迁移风险更低
 
 ### 7.2 导航结构
 
@@ -427,22 +466,118 @@ export default defineConfig({
 
 ### 9.2 文件迁移映射
 
-| 原文件 | 新位置 |
-|--------|--------|
-| `index.html` | `docs/cangyun/index.md` |
-| `pages/skills.html` | `docs/cangyun/skills.md` |
-| `pages/builds.html` | `docs/cangyun/builds.md` |
-| `pages/build-detail.html` | `docs/cangyun/build-detail.md` |
-| `pages/tactics.html` | `docs/cangyun/tactics.md` |
-| `pages/equipment.html` | `docs/cangyun/equipment.md` |
-| `data/build-data.js` | `data/cangyun/builds.json` |
-| `data/skills-data.js` | `data/cangyun/skills.json` |
-| `css/style.css` | `.vitepress/theme/styles/custom.css` |
-| `js/components.js` | Vue组件拆分 |
+| 原文件 | 新位置 | 原文件处理 |
+|--------|--------|------------|
+| `index.html` | `docs/cangyun/index.md` | 迁移后删除 |
+| `pages/skills.html` | `docs/cangyun/skills.md` | 迁移后删除 |
+| `pages/builds.html` | `docs/cangyun/builds.md` | 迁移后删除 |
+| `pages/build-detail.html` | `docs/cangyun/build-detail.md` | 迁移后删除 |
+| `pages/tactics.html` | `docs/cangyun/tactics.md` | 迁移后删除 |
+| `pages/equipment.html` | `docs/cangyun/equipment.md` | 迁移后删除 |
+| `data/build-data.js` | `data/cangyun/builds.json` | 迁移后删除 |
+| `data/skills-data.js` | `data/cangyun/skills.json` | 迁移后删除（注：原标注为旧版，但内容仍为最新） |
+| `data/tactics-data.js` | `data/cangyun/tactics.json` | 迁移后删除 |
+| `data/equipment-data.js` | `data/cangyun/equipment.json` | 迁移后删除 |
+| `css/style.css` | `.vitepress/theme/styles/custom.css` | 迁移后删除 |
+| `js/components.js` | Vue组件拆分 | 迁移后删除 |
+
+**迁移策略**：先在VitePress项目结构中创建新文件，验证功能完整后，再删除原有文件。保留原项目在一个独立分支作为备份。
 
 ---
 
-## 10. 风险与缓解
+## 10. 部署与发布
+
+### 10.1 构建命令
+
+```bash
+# 开发模式（本地预览）
+npm run docs:dev
+
+# 构建生产版本
+npm run docs:build
+
+# 预览构建结果
+npm run docs:preview
+```
+
+### 10.2 输出目录
+
+构建产物位于 `.vitepress/dist/`，为纯静态文件，可直接部署到任意静态托管平台。
+
+### 10.3 托管平台建议
+
+| 平台 | 优势 | 配置要点 |
+|------|------|----------|
+| GitHub Pages | 免费、与代码仓库集成 | 设置base路径、配置GitHub Actions |
+| Vercel | 自动部署、CDN加速 | 无需额外配置 |
+| Netlify | 免费、表单支持 | 配置构建命令 |
+
+### 10.4 CI/CD配置示例（GitHub Actions）
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run docs:build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .vitepress/dist
+```
+
+---
+
+## 11. 移动端适配
+
+### 11.1 响应式断点
+
+沿用原项目的断点设计：
+
+| 断点 | 适用设备 | 宽度范围 |
+|------|----------|----------|
+| 移动端 | 手机 | < 768px |
+| 桌面端 | 平板/电脑 | ≥ 768px |
+
+### 11.2 适配策略
+
+VitePress默认支持响应式布局，自定义样式需遵循：
+
+```css
+/* 移动端优先 */
+.skill-card {
+  padding: 16px;
+}
+
+/* 桌面端增强 */
+@media (min-width: 768px) {
+  .skill-card {
+    padding: 32px;
+  }
+}
+```
+
+### 11.3 迁移检查清单
+
+- [ ] 导航栏移动端折叠正常
+- [ ] 侧边栏移动端可展开
+- [ ] 卡片布局在小屏幕下单列显示
+- [ ] 表格在小屏幕下可横向滚动
+- [ ] 字体大小在移动端可读
+
+---
+
+## 12. 风险与缓解
 
 | 风险 | 影响 | 缓解措施 |
 |------|------|----------|
@@ -453,16 +588,15 @@ export default defineConfig({
 
 ---
 
-## 11. 后续扩展
+## 13. 后续扩展
 
-### 11.1 近期计划
+### 13.1 近期计划
 
 - 完成苍云迁移
 - 添加天策门派
 
-### 11.2 远期规划
+### 13.2 远期规划
 
 - 更多门派逐步添加
-- 移动端适配优化
 - 搜索功能增强
 - 可能的国际化支持
