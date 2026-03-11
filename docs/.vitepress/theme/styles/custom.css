@@ -1,0 +1,24 @@
+:root {
+  --vp-c-bg: var(--color-bg);
+  --vp-c-bg-elv: var(--color-bg-card);
+  --vp-c-text-1: var(--color-text);
+  --vp-c-text-2: var(--color-text-muted);
+  --vp-c-border: var(--color-border);
+  --vp-c-brand-1: var(--color-primary);
+  --vp-c-brand-2: var(--color-primary-light);
+  --vp-font-family-base: var(--font-body);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+h1, h2, h3 { font-family: var(--font-display); color: var(--color-primary); }
+
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { color: var(--color-primary-light); }

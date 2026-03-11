@@ -1,0 +1,13 @@
+{
+  "name": "jx3-pvp-guide",
+  "version": "2.0.0",
+  "description": "剑网三无界端全门派PVP攻略",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.5.0"
+  }
+}
