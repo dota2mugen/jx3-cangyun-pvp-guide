@@ -1,127 +1,91 @@
 <script setup>
 import equipmentData from '../../data/cangyun/equipment.json'
+import PageHero from '../.vitepress/theme/components/PageHero.vue'
+import PageIntro from '../.vitepress/theme/components/PageIntro.vue'
+import ResponsiveTable from '../.vitepress/theme/components/ResponsiveTable.vue'
+import NoticePanel from '../.vitepress/theme/components/NoticePanel.vue'
+import EquipmentReferenceCards from '../.vitepress/theme/components/EquipmentReferenceCards.vue'
+
+const statsPriorityColumns = [
+  { key: 'rank', label: '优先级' },
+  { key: 'name', label: '属性', html: true },
+  { key: 'priority', label: '定位' },
+  { key: 'desc', label: '说明' }
+]
+
+const statsPriorityRows = equipmentData.statsPriority.map((stat) => ({
+  rank: stat.rank,
+  name: `${stat.icon} ${stat.name}`,
+  priority: stat.priority,
+  desc: stat.desc
+}))
+
+const ratioColumns = [
+  { key: 'stat', label: '属性' },
+  { key: 'beginner', label: '新手' },
+  { key: 'advanced', label: '进阶' },
+  { key: 'endgame', label: '毕业' }
+]
+
+const buildSetColumns = [
+  { key: 'slot', label: '部位' },
+  { key: 'name', label: '装备' },
+  { key: 'stats', label: '属性' },
+  { key: 'gems', label: '五彩石' }
+]
 </script>
 
-# 配装指南
+<PageHero
+  eyebrow="苍云配装"
+  title="配装指南"
+  subtitle="属性优先级、旧版参考方案、套装效果和毕业方向"
+  summary="无界端苍云配装先看你的实战目标：想在控链里打出战狂斩杀，就要兼顾会心爆发和破防穿透；想先把循环打稳，就优先保证自己能站得住、技能能转得开。"
+  meta="配装思路 · 参考方案 · 套装效果 · 毕业方向"
+  badge="收尾补强"
+  note="如果你还在熟悉控链与解控，优先保证生存属性和技能循环，不必过早追求极限毕业词条。"
+/>
 
-## 属性优先级
+<PageIntro
+  eyebrow="配装思路"
+  title="会心负责上限，破防负责下限"
+  summary="会心决定你抓住窗口时能不能把战狂伤害抬到上限，破防决定你面对高御劲、高减伤目标时会不会伤害发虚。先按常见对手和自己的手感选方向，再围绕那套思路微调。"
+  :chips="['30破45会', '34会40破', '会心/破防取舍']"
+/>
 
-<div class="stats-priority">
-  <div v-for="stat in equipmentData.statsPriority" :key="stat.rank" class="stat-row">
-    <span class="rank">{{ stat.rank }}</span>
-    <span class="icon">{{ stat.icon }}</span>
-    <div class="stat-info">
-      <strong>{{ stat.name }}</strong>
-      <span>{{ stat.desc }}</span>
-      <span class="priority-tag">{{ stat.priority }}</span>
-    </div>
-  </div>
-</div>
+## 配装参考
 
-## 属性配比推荐
+<EquipmentReferenceCards :items="equipmentData.referenceBuilds" />
 
-| 属性 | 新手 | 进阶 | 毕业 |
-|------|------|------|------|
-| <template v-for="row in equipmentData.statsRatio" :key="row.stat">{{ row.stat }} \| {{ row.beginner }} \| {{ row.advanced }} \| {{ row.endgame }}<br /></template> |
+## 选择建议
 
-## 套装效果
+<NoticePanel title="怎么选这两套方案" tone="info">
+  <ul>
+    <li v-for="(item, index) in equipmentData.advice" :key="index">{{ item }}</li>
+  </ul>
+</NoticePanel>
 
-<div class="set-effects">
-  <div v-for="set in equipmentData.setEffects" :key="set.name" class="set-card" :class="{ recommended: set.recommended }">
-    <h4>{{ set.name }} <span v-if="set.recommended" class="rec-badge">推荐</span></h4>
-    <div v-for="effect in set.effects" :key="effect.pieces" class="effect">
-      <span class="pieces">{{ effect.pieces }}件：</span>
-      <span>{{ effect.effect }}</span>
-    </div>
-    <p class="set-desc">{{ set.desc }}</p>
-  </div>
-</div>
-
-## 毕业配装方案
-
-<div class="build-sets">
-  <div v-for="buildSet in equipmentData.buildSets" :key="buildSet.name" class="build-set">
-    <h4>{{ buildSet.name }}</h4>
-    <table>
-      <thead>
-        <tr><th>部位</th><th>装备</th><th>属性</th><th>五彩石</th></tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in buildSet.items" :key="item.slot">
-          <td>{{ item.slot }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.stats }}</td>
-          <td>{{ item.gems }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-## 每日必做
-
-<ul class="daily-tasks">
-  <li v-for="(task, i) in equipmentData.dailyTasks" :key="i">{{ task }}</li>
-</ul>
 
 <style scoped>
-.stats-priority { display: flex; flex-direction: column; gap: 12px; }
-.stat-row {
+.set-card.recommended {
+  border-color: rgba(230, 196, 84, 0.22);
+}
+
+.set-card__header {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background: var(--color-bg-card);
-  border-radius: 8px;
 }
-.stat-row .rank {
-  width: 32px;
-  height: 32px;
-  background: var(--color-primary);
-  color: #000;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
+
+.set-card__header h3 {
+  margin: 0;
 }
-.stat-row .icon { font-size: 1.5rem; }
-.stat-info { display: flex; flex-direction: column; gap: 4px; }
-.stat-info strong { color: var(--color-primary); }
-.priority-tag {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
+
+.set-card__badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(201, 162, 39, 0.12);
+  color: var(--color-primary-light);
+  font-size: 0.78rem;
 }
-.set-effects { display: grid; gap: 16px; margin: 24px 0; }
-.set-card {
-  background: var(--color-bg-card);
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid var(--color-border);
-}
-.set-card.recommended { border-color: var(--color-primary); }
-.set-card h4 { margin: 0 0 12px 0; }
-.rec-badge {
-  background: var(--color-primary);
-  color: #000;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  margin-left: 8px;
-}
-.effect { margin: 8px 0; }
-.pieces { color: var(--color-text-muted); }
-.set-desc { margin-top: 12px; color: var(--color-text-muted); font-size: 0.9rem; }
-.build-sets { display: flex; flex-direction: column; gap: 24px; }
-.build-set {
-  background: var(--color-bg-card);
-  padding: 16px;
-  border-radius: 8px;
-}
-.build-set h4 { margin: 0 0 16px 0; }
-table { width: 100%; border-collapse: collapse; }
-th, td { padding: 8px; text-align: left; border-bottom: 1px solid var(--color-border); }
-th { color: var(--color-text-muted); font-weight: 400; }
-.daily-tasks { padding-left: 20px; }
-.daily-tasks li { margin: 8px 0; }
 </style>
