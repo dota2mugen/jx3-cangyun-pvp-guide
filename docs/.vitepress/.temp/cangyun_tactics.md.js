@@ -1,0 +1,637 @@
+import { mergeProps, withCtx, createVNode, openBlock, createBlock, Fragment, renderList, useSSRContext, unref, toDisplayString } from "vue";
+import { ssrRenderAttrs, ssrRenderList, ssrInterpolate, ssrRenderComponent } from "vue/server-renderer";
+import { P as PageHero, a as PageIntro } from "./PageIntro.L3kNnde5.js";
+import { N as NoticePanel } from "./NoticePanel.BXSp8naX.js";
+import { M as MechanismTable } from "./MechanismTable.Cq2PI_aZ.js";
+import { R as ResponsiveTable } from "./ResponsiveTable.VGUd9ruq.js";
+import { _ as _export_sfc } from "./plugin-vue_export-helper.1tPrXgE0.js";
+const config = {
+  title: "本攻略基于以下配置",
+  main: "盾飞 + 盾墙（单轻功解）",
+  reasons: [
+    "不带盾墙：少3层血怒 + 少1个击倒，压制力大减",
+    "带盾墙+盾壁（纯辅助流）：只有4个技能槽，盾墙+盾壁+盾猛+刀系 = 没有盾飞位置；不仅没有伤害，控制减疗的压制力也不如盾墙+盾飞",
+    "盾墙+盾飞配置：保持压制力，有增伤有血怒，战狂节奏顺畅"
+  ]
+};
+const sections = [
+  {
+    id: "offense",
+    title: "进攻教学",
+    icon: "⚔️",
+    subsections: [
+      {
+        id: "observe",
+        title: "观察阶段",
+        content: [
+          {
+            type: "paragraph",
+            text: "根据己方配置和对方所带的技能奇穴确定进攻目标，思考击杀的剧本，然后在实战中去往剧本方向靠，这样打起来才不容易乱。"
+          },
+          {
+            type: "muted",
+            text: "这部分只能通过场次积累来了解各门派优劣势，攻略无法细讲。"
+          }
+        ]
+      },
+      {
+        id: "start",
+        title: "起手阶段",
+        content: [
+          {
+            type: "heading",
+            text: "开局准备",
+            level: 4
+          },
+          {
+            type: "mechanism",
+            rows: [
+              {
+                label: "倒计时前",
+                content: "攒3层血怒"
+              },
+              {
+                label: "20秒时",
+                content: "盾飞"
+              },
+              {
+                label: "7秒时",
+                content: "收盾 → 盾猛1段 → 2段"
+              },
+              {
+                label: "留5秒",
+                content: "上马"
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            text: "血怒持续18秒，可以带着3层血怒去抢先手。"
+          },
+          {
+            type: "heading",
+            text: "抢先手细节",
+            level: 4
+          },
+          {
+            type: "mechanism",
+            rows: [
+              {
+                label: "距离把控",
+                content: "很多职业先手技能在20尺，需要25尺左右跳马"
+              },
+              {
+                label: "先手流程",
+                content: "刀系技能位移先手 → 打出战狂 → 立马接盾猛1段免控<br>闪刀只有15尺，需要<strong>跳马 + 聂云 + 闪刀</strong>"
+              },
+              {
+                label: "免控衔接",
+                content: "<strong>闪刀、聂云、斩刀都是位移过程中免控，落地就不免控</strong>，必须衔接好<br>如果被抢到先手，因为只有一个轻功解，会很被动"
+              },
+              {
+                label: "先手目标",
+                content: "不一定是击杀目标，谁在最前面就先手谁<br>可作为<strong>跳板</strong>用盾猛1段的位移去攻击真正想要击杀的目标"
+              }
+            ]
+          },
+          {
+            type: "warning",
+            title: "重要提醒",
+            text: "必须和奶妈沟通好一起冲，不然很可能会开局因为抢先手断奶而去世。"
+          }
+        ]
+      },
+      {
+        id: "kill-point",
+        title: "击杀点",
+        content: [
+          {
+            type: "heading",
+            text: "苍云强势击杀点核心",
+            level: 4
+          },
+          {
+            type: "paragraph",
+            text: "<strong>绝招三段封轻功 + 盾猛二段封轻功</strong>，可以打出长时间的封轻功效果。"
+          },
+          {
+            type: "heading",
+            text: "击杀剧本",
+            level: 4
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "通过高额控制逼出对手的解技能",
+              "在持续的<strong>封轻功 + 盾猛击倒 + 队友接控制</strong>中打出击杀",
+              "<strong>至少双战狂的爆发 + 减疗 + 控制本身携带的减疗</strong>"
+            ]
+          },
+          {
+            type: "heading",
+            text: "连招细节",
+            level: 4
+          },
+          {
+            type: "paragraph",
+            text: "绝招连招中，<strong>阵云二段时盾猛1段的击倒效果消失</strong>，此时需要："
+          },
+          {
+            type: "list",
+            items: [
+              "配合队友的控制",
+              "或自己无公CD的轻功解控的控制"
+            ]
+          },
+          {
+            type: "paragraph",
+            text: "这样让对手交不出轻功解控，出击杀点。"
+          }
+        ]
+      },
+      {
+        id: "practical-tips",
+        title: "实战要点",
+        content: [
+          {
+            type: "heading",
+            text: "循环是死的，实战是活的",
+            level: 4
+          },
+          {
+            type: "paragraph",
+            text: "所谓的基础循环和绝招循环，都只是常用场景下的推荐选择。JJC中必须<strong>根据实际情况灵活应变</strong>。"
+          },
+          {
+            type: "heading",
+            text: "补伤害技巧",
+            level: 4
+          },
+          {
+            type: "paragraph",
+            text: "队友抓点只需要补伤害时，可以<strong>无视顺序</strong>，快速使用绝招1、2段和三层血怒开盾飞，在3秒内打出双战狂爆发补伤害。"
+          },
+          {
+            type: "heading",
+            text: "目标切换策略",
+            level: 4
+          },
+          {
+            type: "mechanism",
+            rows: [
+              {
+                label: "核心思路",
+                content: "盾立免控只有1秒，捏不了技能"
+              },
+              {
+                label: "优势利用",
+                content: "盾猛带位移，可以<strong>快速切目标</strong>，在奶妈和要打的DPS之间转"
+              },
+              {
+                label: "选择原则",
+                content: "<strong>谁没有免控就控谁</strong>"
+              }
+            ]
+          },
+          {
+            type: "tips",
+            title: "实战核心要点",
+            items: [
+              "<strong>灵活应变</strong>：循环只是推荐，实战根据情况调整",
+              "<strong>补伤害</strong>：队友抓点时，无视顺序快速打双战狂",
+              "<strong>连招中断</strong>：注意免控时机和起身控制衔接",
+              "<strong>目标选择</strong>：快速切目标，谁没免控就控谁",
+              "<strong>绝招管理</strong>：绝招CD短于技能解，大胆用来逼解控"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "defense",
+    title: "防守教学",
+    icon: "🛡️",
+    subsections: [
+      {
+        id: "cc-chain",
+        title: "续免控的细节",
+        content: [
+          {
+            type: "heading",
+            text: "免控原理",
+            level: 4
+          },
+          {
+            type: "list",
+            items: [
+              "盾系技能因奇穴「盾立」免控1秒",
+              "无界公CD也是1秒",
+              "所以只有一直使用盾系技能才能续免控"
+            ]
+          },
+          {
+            type: "heading",
+            text: "切刀后风险",
+            level: 4
+          },
+          {
+            type: "list",
+            items: [
+              "盾飞切刀后，公CD转完就不免控了",
+              "闪刀1段落地就可能被控"
+            ]
+          },
+          {
+            type: "warning",
+            title: "注意事项",
+            text: "挨打时尽量不要在没有绝招免控的情况下使用闪刀2段。"
+          },
+          {
+            type: "heading",
+            text: "续免控技巧",
+            level: 4
+          },
+          {
+            type: "combo",
+            steps: [
+              "闪刀1段结束",
+              "<strong>聂云</strong>（轻功无公CD，位移过程不吃控）",
+              "规避1秒不免控时间",
+              "聂云落地公CD已过",
+              "<strong>立马收盾 → 进盾墙续免控</strong>"
+            ]
+          }
+        ]
+      },
+      {
+        id: "counter-disable",
+        title: "应对缴械封外的方式",
+        content: [
+          {
+            type: "heading",
+            text: "问题",
+            level: 4
+          },
+          {
+            type: "paragraph",
+            text: "苍云平时免控只有1秒，需要靠技能持续使用来维持。一旦吃到封外缴械，无法继续使用技能，肯定续不住免控。"
+          },
+          {
+            type: "heading",
+            text: "应对方式",
+            level: 4
+          },
+          {
+            type: "skillCards",
+            cards: [
+              {
+                title: "提前挂扶摇",
+                items: [
+                  "一旦被封立马跳起来",
+                  "高处落下时间让控制时间所剩无几，无需交解"
+                ]
+              },
+              {
+                title: "单纯封外缴械（不封轻功）",
+                items: [
+                  "连续聂云规避可能吃到的控制"
+                ]
+              }
+            ]
+          },
+          {
+            type: "heading",
+            text: "都被封到且没提前挂扶摇",
+            level: 4
+          },
+          {
+            type: "mechanism",
+            rows: [
+              {
+                label: "立马喊奶妈",
+                content: "封外和封轻功都可以驱散<br>无界驱散是随机的，不一定能驱到"
+              },
+              {
+                label: "驱散后处理",
+                content: "<strong>驱了封轻功</strong> → 聂云跑<br><strong>驱了封外</strong> → 盾系技能续免控"
+              },
+              {
+                label: "最坏情况",
+                content: "都没驱散到 + 吃了长时间控制<br>和奶妈沟通：交救急技能还是等封轻结束自己交轻功解<br><strong>防止救命技能交重</strong>"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "displacement",
+        title: "位移的应用",
+        content: [
+          {
+            type: "heading",
+            text: "苍云的位移技能",
+            level: 4
+          },
+          {
+            type: "list",
+            items: [
+              "盾猛1段",
+              "斩刀/闪刀",
+              "盾飞后的特殊普攻隐刀"
+            ]
+          },
+          {
+            type: "heading",
+            text: "应用场景",
+            level: 4
+          },
+          {
+            type: "mechanism",
+            rows: [
+              {
+                label: "场景一",
+                content: "<strong>奶妈救急和解控都没有时</strong><ul><li>手拖位移技能快速远离战场</li><li>让敌人无法追击</li><li>等技能CD缓过来再进场</li></ul>"
+              },
+              {
+                label: "场景二",
+                content: "<strong>应对无视轻功解、缴械强开的配置</strong><ul><li>奶妈没关键技能时远离战场</li><li>等对方用出关键技能后再入场</li></ul>"
+              }
+            ]
+          },
+          {
+            type: "tips",
+            title: "防守核心要点",
+            items: [
+              "<strong>续免控</strong>：盾系技能持续使用，切刀后注意衔接聂云+收盾+盾墙",
+              "<strong>应对封外</strong>：提前挂扶摇、连续聂云、喊奶妈驱散、沟通交解时机",
+              "<strong>位移保命</strong>：利用多位移快速远离战场，等CD再进场"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "configs",
+    title: "配置思路",
+    icon: "📋",
+    intro: "不同的33队伍配置，苍云的定位和打法会有所不同。以下为各配置的详细教学：",
+    configs: [
+      {
+        id: "cangwu",
+        name: "苍无",
+        fullName: "苍云+无方",
+        rating: "5.0",
+        build: "斩刀控制流（核心侧重控场，搭配战狂减疗）",
+        role: "苍云承担<strong>核心控场 + 减疗</strong>职责"
+      },
+      {
+        id: "cangluo",
+        name: "苍螺",
+        fullName: "苍云+田螺",
+        rating: "4.5",
+        build: "闪刀爆发流 或 斩刀控制流",
+        role: "<strong>打外功</strong>：苍云定位为输出<br><strong>打内功</strong>：田螺用机关流，苍云定位为控制"
+      },
+      {
+        id: "cangming",
+        name: "苍明",
+        fullName: "苍云+明教",
+        rating: "4.5",
+        build: "盾墙爆发流",
+        role: "苍云承担<strong>主力输出</strong>职责"
+      },
+      {
+        id: "cangdu",
+        name: "苍毒",
+        fullName: "苍云+毒经",
+        rating: "4.0",
+        build: "带闪刀，追求三战狂爆发",
+        role: "苍云承担<strong>主要控制 + 输出</strong>双重职责"
+      },
+      {
+        id: "daocang",
+        name: "刀苍",
+        fullName: "刀宗+苍云",
+        rating: "3.5",
+        build: "闪刀爆发流（侧重快速补伤害、衔接控制）",
+        role: "苍云承担<strong>补充输出 + 衔接控制</strong>职责"
+      }
+    ]
+  }
+];
+const tacticsData = {
+  config,
+  sections
+};
+const _sfc_main$1 = {
+  __name: "TacticsSections",
+  __ssrInlineRender: true,
+  props: {
+    sections: { type: Array, default: () => [] }
+  },
+  setup(__props) {
+    const configColumns = [
+      { key: "name", label: "配置" },
+      { key: "rating", label: "强度" },
+      { key: "build", label: "建议流派", html: true },
+      { key: "role", label: "定位", html: true }
+    ];
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "tactics-sections" }, _attrs))} data-v-ce7efa27><!--[-->`);
+      ssrRenderList(__props.sections, (section) => {
+        _push(`<section class="tactics-section" data-v-ce7efa27><h2 data-v-ce7efa27>${ssrInterpolate(section.icon)} ${ssrInterpolate(section.title)}</h2>`);
+        if (section.intro) {
+          _push(`<p data-v-ce7efa27>${ssrInterpolate(section.intro)}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        if (section.subsections) {
+          _push(`<!--[-->`);
+          ssrRenderList(section.subsections, (sub) => {
+            _push(`<article class="tactics-subsection" data-v-ce7efa27><h3 data-v-ce7efa27>${ssrInterpolate(sub.title)}</h3><!--[-->`);
+            ssrRenderList(sub.content, (item, itemIndex) => {
+              _push(`<!--[-->`);
+              if (item.type === "paragraph") {
+                _push(`<p data-v-ce7efa27>${item.text ?? ""}</p>`);
+              } else if (item.type === "muted") {
+                _push(`<p class="guide-muted" data-v-ce7efa27>${item.text ?? ""}</p>`);
+              } else if (item.type === "mechanism") {
+                _push(ssrRenderComponent(MechanismTable, {
+                  rows: item.rows
+                }, null, _parent));
+              } else if (item.type === "heading") {
+                _push(`<h4 data-v-ce7efa27>${ssrInterpolate(item.text)}</h4>`);
+              } else if (item.type === "list" && item.ordered) {
+                _push(`<ol data-v-ce7efa27><!--[-->`);
+                ssrRenderList(item.items, (li, i) => {
+                  _push(`<li data-v-ce7efa27>${li ?? ""}</li>`);
+                });
+                _push(`<!--]--></ol>`);
+              } else if (item.type === "list") {
+                _push(`<ul data-v-ce7efa27><!--[-->`);
+                ssrRenderList(item.items, (li, i) => {
+                  _push(`<li data-v-ce7efa27>${li ?? ""}</li>`);
+                });
+                _push(`<!--]--></ul>`);
+              } else if (item.type === "warning") {
+                _push(ssrRenderComponent(NoticePanel, {
+                  title: item.title,
+                  tone: "warn"
+                }, {
+                  default: withCtx((_, _push2, _parent2, _scopeId) => {
+                    if (_push2) {
+                      _push2(`<p data-v-ce7efa27${_scopeId}>${item.text ?? ""}</p>`);
+                    } else {
+                      return [
+                        createVNode("p", {
+                          innerHTML: item.text
+                        }, null, 8, ["innerHTML"])
+                      ];
+                    }
+                  }),
+                  _: 2
+                }, _parent));
+              } else if (item.type === "tips") {
+                _push(ssrRenderComponent(NoticePanel, {
+                  title: item.title,
+                  tone: "success"
+                }, {
+                  default: withCtx((_, _push2, _parent2, _scopeId) => {
+                    if (_push2) {
+                      _push2(`<ul data-v-ce7efa27${_scopeId}><!--[-->`);
+                      ssrRenderList(item.items, (tip, i) => {
+                        _push2(`<li data-v-ce7efa27${_scopeId}>${tip ?? ""}</li>`);
+                      });
+                      _push2(`<!--]--></ul>`);
+                    } else {
+                      return [
+                        createVNode("ul", null, [
+                          (openBlock(true), createBlock(Fragment, null, renderList(item.items, (tip, i) => {
+                            return openBlock(), createBlock("li", {
+                              key: i,
+                              innerHTML: tip
+                            }, null, 8, ["innerHTML"]);
+                          }), 128))
+                        ])
+                      ];
+                    }
+                  }),
+                  _: 2
+                }, _parent));
+              } else if (item.type === "combo") {
+                _push(`<div class="guide-phase-list" data-v-ce7efa27><!--[-->`);
+                ssrRenderList(item.steps, (step, i) => {
+                  _push(`<div class="guide-phase-step" data-v-ce7efa27><span class="guide-phase-index" data-v-ce7efa27>${ssrInterpolate(i + 1)}</span><span data-v-ce7efa27>${step ?? ""}</span></div>`);
+                });
+                _push(`<!--]--></div>`);
+              } else if (item.type === "skillCards") {
+                _push(`<div class="guide-card-grid" data-v-ce7efa27><!--[-->`);
+                ssrRenderList(item.cards, (card) => {
+                  _push(`<div class="guide-block" data-v-ce7efa27><h4 data-v-ce7efa27>${ssrInterpolate(card.title)}</h4><ul data-v-ce7efa27><!--[-->`);
+                  ssrRenderList(card.items, (cardItem, i) => {
+                    _push(`<li data-v-ce7efa27>${cardItem ?? ""}</li>`);
+                  });
+                  _push(`<!--]--></ul></div>`);
+                });
+                _push(`<!--]--></div>`);
+              } else {
+                _push(`<!---->`);
+              }
+              _push(`<!--]-->`);
+            });
+            _push(`<!--]--></article>`);
+          });
+          _push(`<!--]-->`);
+        } else {
+          _push(`<!---->`);
+        }
+        if (section.configs) {
+          _push(ssrRenderComponent(ResponsiveTable, {
+            caption: "不同双 DPS 配置下，苍云的定位和推荐流派会发生明显变化。",
+            columns: configColumns,
+            rows: section.configs
+          }, null, _parent));
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</section>`);
+      });
+      _push(`<!--]--></div>`);
+    };
+  }
+};
+const _sfc_setup$1 = _sfc_main$1.setup;
+_sfc_main$1.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add(".vitepress/theme/components/TacticsSections.vue");
+  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+};
+const TacticsSections = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-ce7efa27"]]);
+const __pageData = JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"cangyun/tactics.md","filePath":"cangyun/tactics.md"}');
+const __default__ = { name: "cangyun/tactics.md" };
+const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
+  __ssrInlineRender: true,
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(_attrs)}>`);
+      _push(ssrRenderComponent(PageHero, {
+        eyebrow: "苍云战术",
+        title: "PVP战术",
+        subtitle: "33 抢先手、控链衔接、减疗压制与防守细节",
+        summary: "战术页不是背固定连招，而是把先手、击杀点和防守拆成可复用的判断逻辑。你要知道什么时候强开，什么时候拖技能，什么时候切目标。",
+        meta: "抢先手 · 击杀剧本 · 续免控 · 配置思路",
+        badge: "实战核心",
+        note: "这页默认基于盾飞 + 盾墙配置展开。"
+      }, null, _parent));
+      _push(ssrRenderComponent(PageIntro, {
+        eyebrow: "先看整体",
+        title: "苍云的战术目标",
+        summary: "苍云在 33 里靠高频控制、封轻功和战狂减疗压住节奏。打进攻时要抢先手，打防守时要靠盾立和位移续命，然后等下一波控链再反压。",
+        chips: ["先手", "控链", "战狂减疗", "续免控"]
+      }, null, _parent));
+      _push(ssrRenderComponent(NoticePanel, {
+        title: unref(tacticsData).config.title,
+        tone: "info"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<p${_scopeId}><strong${_scopeId}>${ssrInterpolate(unref(tacticsData).config.main)}</strong></p><ul${_scopeId}><!--[-->`);
+            ssrRenderList(unref(tacticsData).config.reasons, (reason, i) => {
+              _push2(`<li${_scopeId}>${ssrInterpolate(reason)}</li>`);
+            });
+            _push2(`<!--]--></ul>`);
+          } else {
+            return [
+              createVNode("p", null, [
+                createVNode("strong", null, toDisplayString(unref(tacticsData).config.main), 1)
+              ]),
+              createVNode("ul", null, [
+                (openBlock(true), createBlock(Fragment, null, renderList(unref(tacticsData).config.reasons, (reason, i) => {
+                  return openBlock(), createBlock("li", { key: i }, toDisplayString(reason), 1);
+                }), 128))
+              ])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(ssrRenderComponent(TacticsSections, {
+        sections: unref(tacticsData).sections
+      }, null, _parent));
+      _push(`</div>`);
+    };
+  }
+});
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("cangyun/tactics.md");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+export {
+  __pageData,
+  _sfc_main as default
+};

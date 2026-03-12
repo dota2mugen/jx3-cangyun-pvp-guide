@@ -34,14 +34,39 @@ defineProps({
 
 <style scoped>
 .skill-card {
-  background: var(--color-bg-card);
-  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background:
+    var(--sect-panel-tint),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04)),
+    var(--color-bg-card);
+  border-radius: 22px;
   padding: 24px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sect-frame-color);
   margin-bottom: 16px;
+  box-shadow: var(--shadow-md);
 }
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    var(--sect-ornament),
+    var(--sect-plate);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.skill-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 .skill-header {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
@@ -53,6 +78,10 @@ defineProps({
 .skill-cd {
   color: var(--color-text-muted);
   font-size: 0.875rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 250, 242, 0.34);
+  border: 1px solid rgba(100, 83, 53, 0.12);
 }
 .skill-type-shield .skill-header h3 { color: var(--color-secondary); }
 .skill-type-blade .skill-header h3 { color: var(--color-blade); }
@@ -76,8 +105,9 @@ defineProps({
 .skill-specials {
   margin-bottom: 12px;
   padding: 12px;
-  background: var(--color-bg-card-alt);
-  border-radius: 6px;
+  background: rgba(255, 250, 242, 0.42);
+  border-radius: 14px;
+  border: 1px solid rgba(100, 83, 53, 0.12);
 }
 .skill-specials p {
   margin: 4px 0;
@@ -86,17 +116,25 @@ defineProps({
 .skill-special {
   margin-bottom: 12px;
   padding: 8px 12px;
-  background: var(--color-bg-card-alt);
-  border-radius: 6px;
+  background: rgba(255, 250, 242, 0.42);
+  border-radius: 14px;
+  border: 1px solid rgba(100, 83, 53, 0.12);
   font-size: 0.9rem;
 }
 .skill-books {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(100, 83, 53, 0.14);
 }
 .skill-books h4 { margin: 0 0 8px 0; font-size: 1rem; }
 .skill-books p { margin: 4px 0; font-size: 0.9rem; }
 .book-note { color: var(--color-text-muted); font-size: 0.85rem; }
 .skill-tips { margin-top: 12px; color: var(--color-text-muted); font-size: 0.9rem; }
+
+@media (max-width: 768px) {
+  .skill-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+}
 </style>

@@ -1,58 +1,42 @@
 <script setup>
 import buildsData from '../../data/cangyun/builds.json'
+import PageHero from '../.vitepress/theme/components/PageHero.vue'
+import PageIntro from '../.vitepress/theme/components/PageIntro.vue'
+import QuickNavCards from '../.vitepress/theme/components/QuickNavCards.vue'
+import NoticePanel from '../.vitepress/theme/components/NoticePanel.vue'
+
+const buildCards = Object.values(buildsData.builds).map((build) => ({
+  title: build.name,
+  description: build.description,
+  href: `/cangyun/build-detail?id=${build.id}`,
+  icon: build.heroIcon,
+  badge: build.tag,
+  meta: build.recommended ? '适合第一次接触无界端苍云的玩家，优先从这一套开始。' : '更吃熟练度与细节处理，适合已经熟悉基础控链后再切换。',
+  tone: build.recommended ? 'recommend' : ''
+}))
 </script>
 
-# 流派选择
+<PageHero
+  eyebrow="苍云流派"
+  title="流派选择"
+  subtitle="从容错率、爆发窗口和控制侧重点选择你的配置"
+  summary="无界端苍云的流派差异，本质上是你要把技能槽留给盾墙、盾壁、闪刀还是斩刀。不同选择会直接影响解控数量、攒血怒节奏和击杀方式。"
+  meta="新手推荐 · 进阶爆发 · 控制压制"
+  badge="入门路线"
+  note="建议先从盾壁生存流入手，等你熟悉盾立续免控和战狂窗口后，再尝试爆发流与控制流。"
+/>
 
-选择适合你的流派，点击查看详细配置。
+<PageIntro
+  eyebrow="选流派的方法"
+  title="先看容错，再看输出上限"
+  summary="如果你还不稳定，优先选双解控或更高容错的配置；如果已经能顺畅续免控、找击杀点，再考虑把技能槽换成更高爆发或更强控制。"
+  :chips="['盾壁生存流', '闪刀爆发流', '斩刀控制流']"
+/>
 
-<div class="builds-grid">
-  <a
-    v-for="(build, id) in buildsData.builds"
-    :key="id"
-    :href="`/cangyun/build-detail?id=${id}`"
-    class="build-card"
-    :class="{ recommended: build.recommended }"
-  >
-    <div class="build-icon">{{ build.heroIcon }}</div>
-    <h3>{{ build.name }}</h3>
-    <span class="build-tag" :class="build.tagClass">{{ build.tag }}</span>
-    <p class="build-desc">{{ build.description }}</p>
-  </a>
-</div>
+## 流派卡片
 
-<style scoped>
-.builds-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
-}
-.build-card {
-  background: var(--color-bg-card);
-  border-radius: 12px;
-  padding: 24px;
-  border: 1px solid var(--color-border);
-  text-decoration: none;
-  color: var(--color-text);
-  transition: transform 0.3s, border-color 0.3s;
-}
-.build-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--color-primary);
-}
-.build-card.recommended { border-color: var(--color-primary); }
-.build-icon { font-size: 2.5rem; margin-bottom: 12px; }
-.build-card h3 { margin: 0 0 8px 0; color: var(--color-primary); }
-.build-tag {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  margin-bottom: 12px;
-}
-.build-tag.beginner { background: #4caf50; color: #fff; }
-.build-tag.advanced { background: #ff9800; color: #fff; }
-.build-tag.support { background: #2196f3; color: #fff; }
-.build-desc { color: var(--color-text-muted); font-size: 0.9rem; margin: 0; }
-</style>
+<QuickNavCards :items="buildCards" />
+
+<NoticePanel title="如何进入详情页" tone="info">
+  <p>每张卡片都会跳到当前路由下的详情页，并通过查询参数加载对应流派。无效参数会自动回退到默认的新手推荐流派。</p>
+</NoticePanel>

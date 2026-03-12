@@ -1,34 +1,138 @@
 :root {
-  --color-bg: #0a0c10;
-  --color-bg-card: #151820;
-  --color-bg-card-alt: #1a1e28;
-  --color-text: #e8e4dc;
-  --color-text-muted: #9a9590;
-  --color-border: #2a2e38;
-  --color-primary: #c9a227;
-  --color-primary-light: #e6c454;
-  --color-accent: #8b4513;
-  --color-secondary: #4a90d9;
-  --color-blade: #d94a4a;
-  
+  --paper-base: #e7dbc7;
+  --paper-base-soft: #f2eadc;
+  --paper-base-deep: #d7c6a6;
+  --paper-panel: rgba(248, 241, 230, 0.86);
+  --paper-panel-strong: rgba(244, 235, 220, 0.94);
+  --paper-panel-alt: rgba(236, 225, 206, 0.9);
+  --paper-veil: rgba(255, 250, 242, 0.54);
+  --paper-ink: #2b241c;
+  --paper-ink-soft: #5d5348;
+  --paper-ink-muted: #7a6c5c;
+  --paper-fiber-strength: 0.07;
+  --paper-wash-opacity: 0.3;
+  --paper-grid-opacity: 0.035;
+
+  --color-bg: var(--paper-base);
+  --color-bg-card: var(--paper-panel);
+  --color-bg-card-alt: var(--paper-panel-alt);
+  --color-bg-soft: rgba(255, 255, 255, 0.24);
+  --color-text: var(--paper-ink);
+  --color-text-muted: var(--paper-ink-muted);
+  --color-border: rgba(100, 83, 53, 0.16);
+  --color-border-strong: rgba(120, 93, 31, 0.26);
+  --color-primary: #8b6914;
+  --color-primary-light: #a27e1e;
+  --color-accent: #8e6952;
+  --color-secondary: #557fae;
+  --color-blade: #a14b45;
+  --color-success: #517b53;
+  --color-danger: #a14b45;
+  --color-info: #557fae;
+  --color-ink: rgba(43, 36, 28, 0.92);
+
   --font-display: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', serif;
   --font-body: 'Noto Serif SC', 'SimSun', serif;
-  
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+
+  --shadow-sm: 0 6px 14px rgba(56, 43, 23, 0.08);
+  --shadow-md: 0 14px 30px rgba(56, 43, 23, 0.12);
+  --shadow-lg: 0 22px 52px rgba(56, 43, 23, 0.16);
+  --shadow-glow: 0 0 28px rgba(137, 105, 20, 0.12);
+  --hero-gradient: linear-gradient(135deg, rgba(245, 236, 222, 0.96) 0%, rgba(223, 207, 177, 0.92) 100%);
+
+  --sect-frame-color: rgba(120, 93, 31, 0.18);
+  --sect-glow: rgba(137, 105, 20, 0.12);
+  --sect-ornament:
+    linear-gradient(90deg, transparent 0 18%, rgba(120, 93, 31, 0.08) 18% 19%, transparent 19% 36%, rgba(120, 93, 31, 0.06) 36% 37%, transparent 37% 100%);
+  --sect-plate:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 30%, rgba(120, 93, 31, 0.06) 100%);
+  --sect-shield:
+    radial-gradient(circle at 84% 74%, rgba(126, 150, 179, 0.12), transparent 34%);
+  --sect-shield-rim: rgba(126, 150, 179, 0.22);
+  --sect-blade:
+    linear-gradient(116deg, rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, 0.28) 46%, rgba(255, 255, 255, 0) 70%);
+  --sect-blade-streak: rgba(120, 93, 31, 0.16);
+  --sect-badge-bg: rgba(137, 105, 20, 0.1);
+  --sect-badge-border: rgba(137, 105, 20, 0.18);
+  --sect-panel-tint:
+    linear-gradient(135deg, rgba(137, 105, 20, 0.08) 0%, rgba(24, 29, 38, 0.01) 30%, rgba(85, 127, 174, 0.05) 100%);
 }
 
 [data-sect="cangyun"] {
-  --color-primary: #c9a227;
-  --color-secondary: #4a90d9;
-  --color-accent: #d94a4a;
-  --hero-gradient: linear-gradient(135deg, #1a1c22 0%, #0d1117 100%);
+  --color-primary: #8b6914;
+  --color-primary-light: #ad8524;
+  --color-secondary: #557fae;
+  --color-accent: #725845;
+  --color-blade: #a14b45;
+  --hero-gradient: linear-gradient(135deg, rgba(243, 232, 216, 0.96) 0%, rgba(223, 207, 177, 0.94) 100%);
+
+  --sect-frame-color: rgba(137, 105, 20, 0.28);
+  --sect-glow: rgba(137, 105, 20, 0.16);
+  --sect-ornament:
+    linear-gradient(90deg, transparent 0 16%, rgba(137, 105, 20, 0.1) 16% 17%, transparent 17% 34%, rgba(137, 105, 20, 0.08) 34% 35%, transparent 35% 100%);
+  --sect-plate:
+    linear-gradient(135deg, rgba(201, 162, 39, 0.12) 0%, rgba(24, 29, 38, 0.02) 26%, rgba(161, 75, 69, 0.05) 100%);
+  --sect-shield:
+    radial-gradient(circle at 84% 74%, rgba(85, 127, 174, 0.14), transparent 34%);
+  --sect-shield-rim: rgba(85, 127, 174, 0.24);
+  --sect-blade:
+    linear-gradient(116deg, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0.34) 45%, rgba(255, 255, 255, 0) 70%);
+  --sect-blade-streak: rgba(161, 75, 69, 0.22);
+  --sect-badge-bg: rgba(137, 105, 20, 0.1);
+  --sect-badge-border: rgba(137, 105, 20, 0.2);
+  --sect-panel-tint:
+    linear-gradient(135deg, rgba(201, 162, 39, 0.12) 0%, rgba(24, 29, 38, 0.02) 26%, rgba(74, 144, 217, 0.08) 100%);
 }
 
 [data-sect="tiance"] {
-  --color-primary: #c0392b;
-  --color-secondary: #e67e22;
-  --color-accent: #3498db;
-  --hero-gradient: linear-gradient(135deg, #1a1412 0%, #0d0a09 100%);
+  --color-primary: #b63a30;
+  --color-primary-light: #ce5d45;
+  --color-secondary: #b9892d;
+  --color-accent: #7d5f47;
+  --color-blade: #ba4a3f;
+  --hero-gradient: linear-gradient(135deg, rgba(244, 232, 217, 0.96) 0%, rgba(226, 202, 176, 0.94) 100%);
+
+  --sect-frame-color: rgba(176, 56, 44, 0.28);
+  --sect-glow: rgba(176, 56, 44, 0.14);
+  --sect-ornament:
+    linear-gradient(115deg, transparent 0 24%, rgba(176, 56, 44, 0.12) 24% 25%, transparent 25% 42%, rgba(185, 137, 45, 0.08) 42% 43%, transparent 43% 100%);
+  --sect-plate:
+    linear-gradient(135deg, rgba(192, 57, 43, 0.14) 0%, rgba(24, 29, 38, 0.01) 24%, rgba(214, 158, 71, 0.08) 100%);
+  --sect-shield:
+    radial-gradient(circle at 84% 74%, rgba(176, 56, 44, 0.16), transparent 34%);
+  --sect-shield-rim: rgba(214, 158, 71, 0.22);
+  --sect-blade:
+    linear-gradient(120deg, rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, 0.3) 48%, rgba(255, 255, 255, 0) 72%);
+  --sect-blade-streak: rgba(176, 56, 44, 0.22);
+  --sect-badge-bg: rgba(176, 56, 44, 0.1);
+  --sect-badge-border: rgba(176, 56, 44, 0.18);
+  --sect-panel-tint:
+    linear-gradient(135deg, rgba(192, 57, 43, 0.14) 0%, rgba(24, 29, 38, 0.01) 24%, rgba(214, 158, 71, 0.08) 100%);
+}
+
+[data-sect="chunyang"] {
+  --color-primary: #5d84b0;
+  --color-primary-light: #7e9fbe;
+  --color-secondary: #9cb7d4;
+  --color-accent: #74879a;
+  --color-blade: #6a8db6;
+  --hero-gradient: linear-gradient(135deg, rgba(245, 240, 230, 0.96) 0%, rgba(223, 232, 243, 0.94) 100%);
+
+  --sect-frame-color: rgba(105, 145, 191, 0.26);
+  --sect-glow: rgba(105, 145, 191, 0.12);
+  --sect-ornament:
+    radial-gradient(circle at 84% 24%, rgba(105, 145, 191, 0.12), transparent 18%),
+    linear-gradient(180deg, transparent 0 64%, rgba(160, 189, 221, 0.08) 64% 65%, transparent 65% 100%);
+  --sect-plate:
+    linear-gradient(135deg, rgba(214, 231, 247, 0.3) 0%, rgba(255, 255, 255, 0.06) 24%, rgba(112, 156, 205, 0.08) 100%);
+  --sect-shield:
+    radial-gradient(circle at 82% 74%, rgba(205, 222, 239, 0.18), transparent 34%);
+  --sect-shield-rim: rgba(160, 189, 221, 0.22);
+  --sect-blade:
+    linear-gradient(120deg, rgba(255, 255, 255, 0) 24%, rgba(255, 255, 255, 0.32) 48%, rgba(255, 255, 255, 0) 72%);
+  --sect-blade-streak: rgba(105, 145, 191, 0.2);
+  --sect-badge-bg: rgba(105, 145, 191, 0.1);
+  --sect-badge-border: rgba(105, 145, 191, 0.18);
+  --sect-panel-tint:
+    linear-gradient(135deg, rgba(214, 231, 247, 0.3) 0%, rgba(255, 255, 255, 0.06) 24%, rgba(112, 156, 205, 0.08) 100%);
 }

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cangyun",
+    "name": "苍云",
+    "subtitle": "玄甲苍云军",
+    "status": "available",
+    "path": "/cangyun/",
+    "summary": "近战 · 控制 · 减疗，已完成 Phase 1 现站收口。",
+    "accent": "shield"
+  },
+  {
+    "id": "tiance",
+    "name": "天策",
+    "subtitle": "东都天策府",
+    "status": "planned",
+    "path": "",
+    "summary": "第二门派扩展预留，待后续阶段接入完整内容。",
+    "accent": "horse"
+  }
+]

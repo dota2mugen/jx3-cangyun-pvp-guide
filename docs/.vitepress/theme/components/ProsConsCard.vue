@@ -30,15 +30,48 @@ defineProps({
   margin: 24px 0;
 }
 .pros-card, .cons-card {
-  background: var(--color-bg-card);
-  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background:
+    var(--sect-panel-tint),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04)),
+    var(--color-bg-card);
+  border-radius: 20px;
   padding: 24px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sect-frame-color);
+  box-shadow: var(--shadow-md);
 }
-.pros-card { border-left: 3px solid #4caf50; }
-.cons-card { border-left: 3px solid #f44336; }
-.pros-card h4 { color: #4caf50; margin: 0 0 12px 0; }
-.cons-card h4 { color: #f44336; margin: 0 0 12px 0; }
+
+.pros-card::before,
+.cons-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    var(--sect-ornament),
+    var(--sect-plate);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.pros-card > *,
+.cons-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pros-card { border-left: 3px solid #517b53; }
+.cons-card { border-left: 3px solid #a14b45; }
+.pros-card h4 { color: #517b53; margin: 0 0 12px 0; }
+.cons-card h4 { color: #a14b45; margin: 0 0 12px 0; }
 ul { margin: 0; padding-left: 20px; }
 li { margin: 8px 0; }
+
+@media (max-width: 768px) {
+  .pros-card,
+  .cons-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+}
 </style>

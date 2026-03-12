@@ -1,58 +1,52 @@
+---
+sidebar: false
+aside: false
+---
+
 <script setup>
 import indexData from '../../data/cangyun/index.json'
+import PageHero from '../.vitepress/theme/components/PageHero.vue'
+import PageIntro from '../.vitepress/theme/components/PageIntro.vue'
+import QuickNavCards from '../.vitepress/theme/components/QuickNavCards.vue'
 import ProsConsCard from '../.vitepress/theme/components/ProsConsCard.vue'
-import MechanismTable from '../.vitepress/theme/components/MechanismTable.vue'
+import NoticePanel from '../.vitepress/theme/components/NoticePanel.vue'
 </script>
 
-# {{ indexData.name }}
+<PageHero
+  eyebrow="苍云专区"
+  :title="indexData.name"
+  :subtitle="indexData.tagline"
+  :summary="indexData.intro.description"
+  :meta="indexData.position"
+  :badge="indexData.hero.badge"
+  :note="indexData.hero.note"
+/>
 
-{{ indexData.tagline }}
+<PageIntro
+  eyebrow="阅读顺序"
+  title="先认门派节奏，再进具体栏目"
+  summary="这页只承担苍云门派入口和阅读顺序说明，不再展开详细机制表和属性细节。进入技能、流派、战术、配装四个栏目后，再按专题深入。"
+  :chips="['刀盾切换', '战狂爆发', '盾立续免控']"
+/>
 
-<span class="position-tag">{{ indexData.position }}</span>
+## 推荐阅读顺序
 
-## 门派简介
+<QuickNavCards :items="indexData.quickLinks" />
 
-{{ indexData.intro.description }}
+## 门派定位
 
 <ProsConsCard :pros="indexData.intro.pros" :cons="indexData.intro.cons" />
 
-## 核心机制
+## 上手关键词
 
-<MechanismTable
-  v-for="mech in indexData.coreMechanisms"
-  :key="mech.name"
-  :title="mech.name"
-  :rows="[{ label: '效果', content: mech.desc }]"
-/>
-
-## 属性优先级
-
-<div class="stats-list">
-  <div v-for="stat in indexData.stats.priority" :key="stat.name" class="stat-item">
-    <strong>{{ stat.name }}</strong>
-    <span>{{ stat.desc }}</span>
-  </div>
+<div class="guide-card-grid">
+  <article v-for="mech in indexData.coreMechanisms" :key="mech.name" class="guide-block">
+    <span class="guide-kicker">核心机制</span>
+    <h3>{{ mech.name }}</h3>
+    <p>{{ mech.desc }}</p>
+  </article>
 </div>
 
-<style scoped>
-.position-tag {
-  display: inline-block;
-  padding: 4px 12px;
-  background: var(--color-bg-card-alt);
-  border-radius: 4px;
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
-  margin-bottom: 24px;
-}
-.stats-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.stat-item {
-  padding: 12px;
-  background: var(--color-bg-card);
-  border-radius: 8px;
-}
-.stat-item strong { color: var(--color-primary); margin-right: 12px; }
-</style>
+<NoticePanel title="无界端阅读提醒" tone="warn">
+  <p>本攻略面向无界端，不沿用旗舰端的技能系统记忆方式。请始终按 8 选 4 主动技能、四层奇穴和第四层绝招的体系理解苍云配置。</p>
+</NoticePanel>

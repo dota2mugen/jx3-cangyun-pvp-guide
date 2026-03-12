@@ -6,7 +6,6 @@ export default defineConfig({
   lang: 'zh-CN',
   
   srcExclude: ['**/superpowers/**'],
-  ignoreDeadLinks: true,
   
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
@@ -16,8 +15,7 @@ export default defineConfig({
   
   themeConfig: {
     nav: [
-      { text: '门派选择', link: '/' },
-      { text: '通用机制', link: '/mechanics' }
+      { text: '门派选择', link: '/' }
     ],
     
     sidebar: {

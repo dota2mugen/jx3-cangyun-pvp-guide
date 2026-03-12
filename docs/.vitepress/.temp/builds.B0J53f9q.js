@@ -1,0 +1,720 @@
+const builds = {
+  "shield-wall-burst": {
+    id: "shield-wall-burst",
+    name: "闪刀爆发流",
+    tag: "进阶",
+    tagClass: "advanced",
+    description: "盾墙内攒 3 层血怒，绝招期间连续 3 次战狂爆发，追求极限伤害。",
+    heroIcon: "🛡️",
+    heroColor: "#4a90d9",
+    slides: [
+      {
+        title: "技能与秘籍",
+        type: "skills-books",
+        content: {
+          skills: [
+            {
+              name: "盾猛",
+              type: "shield",
+              desc: "核心控制 + 减大招 CD",
+              book: "刀系技能每消耗一层血怒，降低本招式 3 秒调息。",
+              bookNote: "核心秘籍，战狂减盾猛 CD"
+            },
+            {
+              name: "盾飞",
+              type: "shield",
+              desc: "切刀增伤 + 重置刀系 CD",
+              book: "调息增加 5 秒，清除刀系招式调息时间。",
+              bookNote: "重置闪刀 CD，增加爆发频率"
+            },
+            {
+              name: "闪刀",
+              type: "blade",
+              desc: "位移 + 战狂爆发",
+              book: "增伤 15%，持续 12 秒。",
+              bookNote: "提升爆发伤害"
+            },
+            {
+              name: "盾墙",
+              type: "shield",
+              desc: "减伤免控 + 攒血怒",
+              book: "盾墙姿态每被攻击 3 次，获得 1 秒盾立。",
+              bookNote: "增加免控覆盖"
+            }
+          ],
+          ultimate: {
+            name: "阵云结晦",
+            desc: "封轻功 + 免控 + 追击 + 3 血怒"
+          }
+        }
+      },
+      {
+        title: "奇穴选择",
+        type: "talents",
+        content: {
+          talents: [
+            {
+              layer: "第一层",
+              pick: "镇关",
+              reason: "盾系技能获得盾立，PVP 核心免控"
+            },
+            {
+              layer: "第二层",
+              pick: "睥睨",
+              reason: "攻击低血量目标增伤 10%"
+            },
+            {
+              layer: "第三层",
+              pick: "战狂",
+              reason: "3 层血怒触发大伤害 + 减疗 30%"
+            },
+            {
+              layer: "第四层",
+              pick: "阵云结晦",
+              reason: "多段封轻功 + 追击 + 3 血怒"
+            }
+          ]
+        }
+      },
+      {
+        title: "基础循环",
+        type: "combo",
+        content: {
+          desc: "开局进场攒血怒的基本连招。",
+          steps: [
+            {
+              skill: "盾猛 1 段",
+              effect: "击倒 3 秒",
+              key: "突进 + 控制"
+            },
+            {
+              skill: "盾猛 2 段",
+              effect: "封轻功 3 秒",
+              key: "续控"
+            },
+            {
+              skill: "盾飞 1 段",
+              effect: "切刀增伤 15%",
+              key: "准备爆发"
+            },
+            {
+              skill: "闪刀 1 段",
+              effect: "战狂触发",
+              key: "爆发",
+              highlight: true
+            }
+          ],
+          followUp: [
+            {
+              skill: "盾飞 2 段",
+              effect: "收盾，无公 CD"
+            },
+            {
+              skill: "盾墙",
+              effect: "进盾墙继续攒血怒"
+            }
+          ]
+        }
+      },
+      {
+        title: "爆发循环",
+        type: "burst",
+        content: {
+          desc: "盾墙内攒满 3 层血怒后的完整爆发。",
+          phases: [
+            {
+              name: "准备",
+              steps: [
+                {
+                  skill: "盾墙",
+                  effect: "1 层血怒"
+                },
+                {
+                  skill: "普攻（盾舞）",
+                  effect: "+1 层血怒"
+                },
+                {
+                  skill: "盾猛（独立）",
+                  effect: "+1 层血怒，凑满 3 层"
+                }
+              ]
+            },
+            {
+              name: "爆发",
+              steps: [
+                {
+                  skill: "闪刀 1 段",
+                  effect: "战狂①",
+                  highlight: true
+                },
+                {
+                  skill: "阵云 1 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "盾猛 1 段",
+                  effect: "击倒"
+                },
+                {
+                  skill: "盾猛 2 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "盾飞 1 段",
+                  effect: "重置闪刀"
+                },
+                {
+                  skill: "阵云 2 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "闪刀 1 段",
+                  effect: "战狂②",
+                  highlight: true
+                },
+                {
+                  skill: "阵云 3 段",
+                  effect: "追击 + 3 血怒"
+                },
+                {
+                  skill: "闪刀 2 段",
+                  effect: "战狂③",
+                  highlight: true
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        title: "注意事项",
+        type: "tips",
+        content: {
+          pros: [
+            "盾墙内可攒 3 层血怒，绝招期间能打满 3 次战狂。",
+            "战狂触发频率高，秘籍减盾猛 CD 的收益明显。",
+            "盾墙同时提供减伤、免控和攒血怒窗口。"
+          ],
+          cons: [
+            "只有门派轻功 30 秒解控，容易被抓死。",
+            "需要熟练掌握免控续接节奏。",
+            "新手容错率相对较低。"
+          ],
+          tips: [
+            "盾飞 2 段无公 CD，可立即接盾墙。",
+            "进盾墙后用普攻（盾舞）和独立盾猛快速攒满 3 层血怒。",
+            "3 次战狂意味着 3 次减疗压制窗口。",
+            "阵云 3 段有 20 尺追击，可追击逃跑目标。"
+          ]
+        }
+      }
+    ]
+  },
+  "shield-barrier": {
+    id: "shield-barrier",
+    name: "盾壁生存流",
+    tag: "新手推荐",
+    tagClass: "beginner",
+    description: "盾壁提供解控、护盾和免控，双解控容错率高，适合新手入门。",
+    heroIcon: "🛡️",
+    heroColor: "#4caf50",
+    recommended: true,
+    slides: [
+      {
+        title: "技能与秘籍",
+        type: "skills-books",
+        content: {
+          skills: [
+            {
+              name: "盾猛",
+              type: "shield",
+              desc: "核心控制 + 减大招 CD",
+              book: "刀系技能每消耗一层血怒，降低本招式 3 秒调息。",
+              bookNote: "核心秘籍"
+            },
+            {
+              name: "盾飞",
+              type: "shield",
+              desc: "切刀增伤 + 封内控制",
+              book: "内功沉默 2 秒。",
+              bookNote: "无盾墙攒血怒时，封内用于补控制"
+            },
+            {
+              name: "闪刀",
+              type: "blade",
+              desc: "位移 + 战狂爆发（推荐）",
+              book: "增伤 15%，持续 12 秒。",
+              bookNote: "提升爆发伤害"
+            },
+            {
+              name: "盾壁",
+              type: "shield",
+              desc: "解控 + 护盾 + 免控",
+              book: "护盾化解伤害额外提高 10%，持续时间延长 1 秒。",
+              bookNote: "增强生存"
+            }
+          ],
+          ultimate: {
+            name: "阵云结晦",
+            desc: "封轻功 + 免控 + 追击 + 3 血怒"
+          },
+          note: "也可把闪刀替换成斩刀，换取更多控制但会损失部分爆发。"
+        }
+      },
+      {
+        title: "奇穴选择",
+        type: "talents",
+        content: {
+          talents: [
+            {
+              layer: "第一层",
+              pick: "镇关",
+              reason: "盾系技能获得盾立，PVP 核心免控"
+            },
+            {
+              layer: "第二层",
+              pick: "睥睨",
+              reason: "攻击低血量目标增伤 10%"
+            },
+            {
+              layer: "第三层",
+              pick: "战狂",
+              reason: "3 层血怒触发大伤害 + 减疗 30%"
+            },
+            {
+              layer: "第四层",
+              pick: "阵云结晦",
+              reason: "多段封轻功 + 追击 + 3 血怒"
+            }
+          ]
+        }
+      },
+      {
+        title: "基础循环",
+        type: "combo",
+        content: {
+          desc: "盾壁用于应急解控，不加入常规循环。",
+          steps: [
+            {
+              skill: "盾猛 1 段",
+              effect: "击倒 3 秒",
+              key: "突进 + 控制"
+            },
+            {
+              skill: "盾猛 2 段",
+              effect: "封轻功 3 秒",
+              key: "续控"
+            },
+            {
+              skill: "盾飞 1 段",
+              effect: "封内 2 秒 + 切刀",
+              key: "控制 + 增伤"
+            },
+            {
+              skill: "闪刀",
+              effect: "战狂爆发",
+              key: "收尾"
+            }
+          ],
+          followUp: [
+            {
+              skill: "隐刀普攻 / 聂云",
+              effect: "擎刀状态下规避伤害"
+            },
+            {
+              skill: "等待盾猛 CD",
+              effect: "盾飞 2 段再接盾猛循环"
+            }
+          ]
+        }
+      },
+      {
+        title: "爆发循环",
+        type: "burst",
+        content: {
+          desc: "竞技场常用双战狂爆发，最后 3 秒内打出。",
+          phases: [
+            {
+              name: "爆发",
+              steps: [
+                {
+                  skill: "阵云 1 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "盾猛 1 段",
+                  effect: "击倒"
+                },
+                {
+                  skill: "盾猛 2 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "盾飞 1 段",
+                  effect: "封内 + 3 血怒"
+                },
+                {
+                  skill: "阵云 2 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "闪刀 1 段",
+                  effect: "战狂①",
+                  highlight: true
+                },
+                {
+                  skill: "阵云 3 段",
+                  effect: "封轻功 + 3 血怒"
+                },
+                {
+                  skill: "闪刀 2 段",
+                  effect: "战狂②",
+                  highlight: true
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        title: "注意事项",
+        type: "tips",
+        content: {
+          pros: [
+            "盾壁提供解控、免控和护盾，容错率高。",
+            "30% 血量护盾配合解控，生存能力强。",
+            "门派轻功和盾壁形成双解控。"
+          ],
+          cons: [
+            "无盾墙攒血怒，绝招期爆发较弱。",
+            "战狂触发频率偏低，CD 循环较慢。",
+            "带斩刀会牺牲爆发，带闪刀会牺牲控制。"
+          ],
+          tips: [
+            "盾壁留给应急解控，不要起手就交。",
+            "打完一轮后如果没有盾系技能，不要急着收盾。",
+            "擎刀状态下多用隐刀普攻或聂云规避伤害。",
+            "控制里打出战狂依旧是关键压制点。"
+          ]
+        }
+      }
+    ]
+  },
+  "shield-wall-control": {
+    id: "shield-wall-control",
+    name: "斩刀控制流",
+    tag: "进阶",
+    tagClass: "advanced",
+    description: "保留双战狂爆发的同时增加斩刀控制，适合配合高输出队友。",
+    heroIcon: "⚔️",
+    heroColor: "#ff9800",
+    slides: [
+      {
+        title: "技能与秘籍",
+        type: "skills-books",
+        content: {
+          skills: [
+            {
+              name: "盾猛",
+              type: "shield",
+              desc: "核心控制 + 减大招 CD",
+              book: "刀系技能每消耗一层血怒，降低本招式 3 秒调息。",
+              bookNote: "核心秘籍"
+            },
+            {
+              name: "盾飞",
+              type: "shield",
+              desc: "切刀增伤 + 重置刀系 CD",
+              book: "调息增加 5 秒，清除刀系招式调息时间。",
+              bookNote: "重置斩刀 CD"
+            },
+            {
+              name: "斩刀",
+              type: "blade",
+              desc: "3 秒眩晕 + 击下马",
+              book: "3 秒眩晕，返还下次刀系技能调息。",
+              bookNote: "控制核心"
+            },
+            {
+              name: "盾墙",
+              type: "shield",
+              desc: "减伤免控 + 攒血怒",
+              book: "盾墙姿态每被攻击 3 次，获得 1 秒盾立。",
+              bookNote: "增加免控"
+            }
+          ],
+          ultimate: {
+            name: "阵云结晦",
+            desc: "封轻功 + 免控 + 追击 + 3 血怒"
+          }
+        }
+      },
+      {
+        title: "奇穴选择",
+        type: "talents",
+        content: {
+          talents: [
+            {
+              layer: "第一层",
+              pick: "镇关",
+              reason: "盾系技能获得盾立"
+            },
+            {
+              layer: "第二层",
+              pick: "睥睨",
+              reason: "攻击低血量目标增伤 10%"
+            },
+            {
+              layer: "第三层",
+              pick: "战狂",
+              reason: "3 层血怒触发爆发 + 减疗"
+            },
+            {
+              layer: "第四层",
+              pick: "阵云结晦",
+              reason: "多段封轻功 + 追击"
+            }
+          ]
+        }
+      },
+      {
+        title: "控制链循环",
+        type: "combo",
+        content: {
+          desc: "开局攒满 3 层血怒后，用斩刀起手打一轮控制链。",
+          steps: [
+            {
+              skill: "斩刀",
+              effect: "眩晕 3 秒",
+              key: "先手控制"
+            },
+            {
+              skill: "盾猛 1 段",
+              effect: "击倒 3 秒",
+              key: "无缝衔接"
+            },
+            {
+              skill: "盾猛 2 段",
+              effect: "封轻功 3 秒",
+              key: "续控"
+            },
+            {
+              skill: "盾飞 1 段",
+              effect: "重置斩刀",
+              key: "准备二轮"
+            }
+          ],
+          followUp: [
+            {
+              skill: "斩刀",
+              effect: "切奶或打递减控制"
+            },
+            {
+              skill: "盾飞 2 段",
+              effect: "收盾，无公 CD"
+            },
+            {
+              skill: "盾墙",
+              effect: "减伤 + 免控，等下一轮 CD"
+            }
+          ]
+        }
+      },
+      {
+        title: "绝招控制链",
+        type: "burst",
+        content: {
+          desc: "盾墙内攒 3 层血怒，绝招期间打出长控制链。",
+          phases: [
+            {
+              name: "准备",
+              steps: [
+                {
+                  skill: "盾墙",
+                  effect: "进盾墙"
+                },
+                {
+                  skill: "盾舞（普攻）",
+                  effect: "+1 层血怒"
+                },
+                {
+                  skill: "盾猛（盾墙内）",
+                  effect: "击倒 + 攒满 3 层血怒"
+                }
+              ]
+            },
+            {
+              name: "爆发",
+              steps: [
+                {
+                  skill: "阵云 1 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "斩刀",
+                  effect: "眩晕 + 战狂",
+                  highlight: true
+                },
+                {
+                  skill: "阵云 2 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "盾猛 1 段",
+                  effect: "击倒"
+                },
+                {
+                  skill: "盾猛 2 段",
+                  effect: "封轻功"
+                },
+                {
+                  skill: "盾飞",
+                  effect: "重置斩刀"
+                },
+                {
+                  skill: "阵云 3 段",
+                  effect: "封轻功 + 3 血怒"
+                },
+                {
+                  skill: "斩刀",
+                  effect: "递减眩晕 + 战狂",
+                  highlight: true
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        title: "注意事项",
+        type: "tips",
+        content: {
+          pros: [
+            "保留双战狂爆发的同时增加斩刀控制。",
+            "更适合配合高输出但控制不足的队友。",
+            "盾墙内战狂触发频率依然可观。"
+          ],
+          cons: [
+            "牺牲 3 战狂上限，只剩双战狂。",
+            "解控资源仍然偏少。",
+            "更依赖队友跟伤害。"
+          ],
+          tips: [
+            "斩刀起手时注意不要和队友控制打重。",
+            "第二次斩刀更多用于切奶或打递减控制。",
+            "盾飞带重置秘籍后，可以在奶妈和 DPS 之间转火。",
+            "斩刀眩晕在击倒过程中不会生效，要注意衔接时机。"
+          ]
+        }
+      }
+    ]
+  },
+  "pure-support": {
+    id: "pure-support",
+    name: "纯辅助流",
+    tag: "辅助",
+    tagClass: "support",
+    description: "放弃盾飞，生存拉满，双解控配合长时间免控，定位更偏纯辅助。",
+    heroIcon: "🫂",
+    heroColor: "#2196f3",
+    slides: [
+      {
+        title: "技能与秘籍",
+        type: "skills-books",
+        content: {
+          skills: [
+            {
+              name: "盾猛",
+              type: "shield",
+              desc: "核心控制",
+              book: "眩晕 3 秒（非击倒）。",
+              bookNote: "控制变体"
+            },
+            {
+              name: "盾墙",
+              type: "shield",
+              desc: "长时间免控减伤",
+              book: "队友获得免控 + 减伤 35%。",
+              bookNote: "团队辅助"
+            },
+            {
+              name: "斩刀",
+              type: "blade",
+              desc: "控制衔接",
+              book: "3 秒眩晕。",
+              bookNote: "控制核心"
+            },
+            {
+              name: "盾壁",
+              type: "shield",
+              desc: "解控 + 护盾",
+              book: "队友获得 15% 血量护盾。",
+              bookNote: "团队保护"
+            }
+          ],
+          ultimate: {
+            name: "阵云结晦",
+            desc: "封轻功 + 免控 + 追击"
+          },
+          note: "放弃盾飞后，输出明显下降，但团队保护能力更高。"
+        }
+      },
+      {
+        title: "奇穴选择",
+        type: "talents",
+        content: {
+          talents: [
+            {
+              layer: "第一层",
+              pick: "镇关",
+              reason: "盾系技能获得盾立"
+            },
+            {
+              layer: "第二层",
+              pick: "睥睨",
+              reason: "保底增伤"
+            },
+            {
+              layer: "第三层",
+              pick: "战狂",
+              reason: "保留基础减疗能力"
+            },
+            {
+              layer: "第四层",
+              pick: "阵云结晦",
+              reason: "封轻功 + 免控"
+            }
+          ]
+        }
+      },
+      {
+        title: "注意事项",
+        type: "tips",
+        content: {
+          pros: [
+            "生存拉满，双解控配合长时间免控。",
+            "盾墙和盾壁都能给队友提供保护。",
+            "盾猛和斩刀都有控制。"
+          ],
+          cons: [
+            "几乎没有爆发，纯辅助定位明显。",
+            "无盾飞导致血怒不足，战狂触发变少。",
+            "更依赖队友本身的输出能力。"
+          ],
+          tips: [
+            "优先保队友，不要强行抢先手。",
+            "盾墙秘籍适合在队友被集火时提前开。",
+            "盾壁护盾尽量给关键队友而不是自己。",
+            "更适合 33 里搭配高输出队友。"
+          ]
+        }
+      }
+    ]
+  }
+};
+const buildsData = {
+  builds
+};
+export {
+  buildsData as b
+};

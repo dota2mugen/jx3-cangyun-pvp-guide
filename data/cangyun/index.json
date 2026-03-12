@@ -2,6 +2,10 @@
   "name": "苍云",
   "tagline": "玄甲苍云军",
   "position": "近战 · 控制 · 减疗",
+  "hero": {
+    "badge": "PVP 新手攻略",
+    "note": "推荐先读门派落地页，再依次进入技能、流派、战术、配装四个栏目。"
+  },
   "intro": {
     "description": "苍云是刀盾切换的近战门派，在PVP中主要提供控制和减疗，通过盾系与刀系技能的配合打出控制链和减疗压制。",
     "pros": [
@@ -33,5 +37,35 @@
       { "name": "破防", "desc": "穿透敌方防御" },
       { "name": "御劲", "desc": "减少被暴击几率" }
     ]
-  }
+  },
+  "quickLinks": [
+    {
+      "title": "技能详解",
+      "description": "先掌握血怒、战狂、盾立和关键技能 CD，再谈连招与爆发。",
+      "href": "/cangyun/skills",
+      "icon": "⚔",
+      "badge": "基础必读"
+    },
+    {
+      "title": "流派选择",
+      "description": "对比盾壁生存流、闪刀爆发流、斩刀控制流的定位与容错率。",
+      "href": "/cangyun/builds",
+      "icon": "🛡",
+      "badge": "入门路线"
+    },
+    {
+      "title": "PVP 战术",
+      "description": "围绕 33 抢先手、控链、减疗压制和防守细节展开实战思路。",
+      "href": "/cangyun/tactics",
+      "icon": "🎯",
+      "badge": "实战核心"
+    },
+    {
+      "title": "配装指南",
+      "description": "整理属性优先级、配比建议、套装效果和毕业配装方向。",
+      "href": "/cangyun/equipment",
+      "icon": "🧱",
+      "badge": "收尾补强"
+    }
+  ]
 }
